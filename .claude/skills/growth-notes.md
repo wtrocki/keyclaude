@@ -1,6 +1,6 @@
 ---
 name: growth-notes
-description: Turn feedback threads into concise growth notes aligned with MongoDB's Leadership Principles, with Staff-level signal detection and cross-team impact tagging.
+description: Turn feedback threads into concise growth notes aligned with MongoDB's Leadership Principles, with impact signal detection and cross-team impact tagging.
 ---
 
 Given a thread (e.g., Slack, email, doc comments, 1:1 notes, or incident reports) that evaluates the user's work, updates, or handling of a situation, produce content ready to append to their growth notes.
@@ -27,8 +27,8 @@ Output all six sections below in order:
 - Each bullet should name the behavior, the context where it applies, and the Leadership Principle it serves.
 - Example: "In future design reviews, summarize tradeoffs and decision rationale in writing — 'communicate with clarity' + 'focus on outcomes'."
 
-5) Staff-level signal
-- Assess whether this thread contains evidence of Staff-level impact. Use exactly one of:
+5) Impact signal
+- Assess whether this thread contains evidence of high-impact contribution. Use exactly one of:
   - STRONG: Clear evidence of cross-team enablement, organizational influence, technical authority where others deferred to this engineer's judgment, or durable adoption of an artifact/pattern.
   - MODERATE: Evidence of cross-team contribution, but outcome or adoption is unclear or incomplete.
   - WEAK: Primarily individual task completion; no cross-team or organizational signal present.

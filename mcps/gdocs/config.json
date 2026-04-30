@@ -1,0 +1,28 @@
+{
+  "name": "gdocs",
+  "description": "Google Drive MCP — read and update employee development plan documents and cycle notes.",
+  "setup": {
+    "steps": [
+      "Enable the Google Drive API at https://console.cloud.google.com/apis/library/drive.googleapis.com.",
+      "Create an OAuth 2.0 client ID (Desktop app type) and download credentials.json.",
+      "Place credentials.json at the path specified in GDRIVE_CREDENTIALS_FILE.",
+      "On first run, the MCP will open a browser window to complete OAuth — the token is then cached at GDRIVE_TOKEN_FILE.",
+      "Add the claude_mcp_entry block below to your Claude Code MCP settings (~/.claude/settings.json or project .claude/settings.json).",
+      "Alternatively, use the Claude.ai Google Drive integration which handles auth automatically."
+    ],
+    "env": {
+      "GDRIVE_CREDENTIALS_FILE": "~/.config/gdrive/credentials.json",
+      "GDRIVE_TOKEN_FILE": "~/.config/gdrive/token.json"
+    },
+    "claude_mcp_entry": {
+      "gdocs": {
+        "command": "npx",
+        "args": ["-y", "@modelcontextprotocol/server-gdrive"],
+        "env": {
+          "GDRIVE_CREDENTIALS_FILE": "${GDRIVE_CREDENTIALS_FILE}",
+          "GDRIVE_TOKEN_FILE": "${GDRIVE_TOKEN_FILE}"
+        }
+      }
+    }
+  }
+}

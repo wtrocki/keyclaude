@@ -1,0 +1,24 @@
+{
+  "name": "github",
+  "description": "GitHub MCP — read PRs, issues, and code reviews for growth capture and the review agent.",
+  "setup": {
+    "steps": [
+      "Create a GitHub Personal Access Token at https://github.com/settings/tokens.",
+      "Grant the following scopes: repo (read), read:org, read:user.",
+      "Set GITHUB_PERSONAL_ACCESS_TOKEN in your shell environment (e.g. ~/.zshrc).",
+      "Add the claude_mcp_entry block below to your Claude Code MCP settings (~/.claude/settings.json or project .claude/settings.json)."
+    ],
+    "env": {
+      "GITHUB_PERSONAL_ACCESS_TOKEN": "ghp_..."
+    },
+    "claude_mcp_entry": {
+      "github": {
+        "command": "npx",
+        "args": ["-y", "@modelcontextprotocol/server-github"],
+        "env": {
+          "GITHUB_PERSONAL_ACCESS_TOKEN": "${GITHUB_PERSONAL_ACCESS_TOKEN}"
+        }
+      }
+    }
+  }
+}

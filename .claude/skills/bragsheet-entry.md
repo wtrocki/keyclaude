@@ -2,15 +2,15 @@
 name: bragsheet-entry
 description: >
   Convert a SMART goal completion, weekly note, growth feedback note, or incident
-  summary into a single bragsheet table row using Staff-level framing. If the input
-  does not contain Staff-level signal evidence, outputs a no-signal comment instead.
+  summary into a single bragsheet table row using high-impact framing. If the input
+  does not contain high-impact signal evidence, outputs a no-signal comment instead.
 ---
 
 Given any growth-related input (SMART goal, weekly note, feedback note, incident
-summary, or meeting transcript), assess whether it contains a Staff-level impact
+summary, or meeting transcript), assess whether it contains a high-impact impact
 signal and produce exactly one of the two outputs below.
 
-**Staff-level signal criteria — ALL of the following qualify:**
+**high-impact signal criteria — ALL of the following qualify:**
 - Cross-team enablement: an artifact, pattern, or decision you produced was adopted
   or acted upon by a team other than your own squad.
 - Technical authority: others deferred to your technical judgment in a visible decision;
