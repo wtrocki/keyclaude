@@ -1,0 +1,38 @@
+#!/usr/bin/env bash
+# rewrite — pipe selected text through the rewrite-inline skill, copy result to clipboard.
+#
+# Usage:
+#   echo "draft text" | bin/rewrite [mode]
+#   pbpaste | bin/rewrite pg
+#
+# Modes: default (default), pg, external
+set -euo pipefail
+
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+REPO_ROOT="$(dirname "$SCRIPT_DIR")"
+MODE="${1:-default}"
+
+INPUT=$(cat)
+if [[ -z "$INPUT" ]]; then
+  echo "Error: no input text" >&2
+  exit 1
+fi
+
+case "$MODE" in
+  default|pg|external) ;;
+  *) echo "Unknown mode: $MODE (valid: default, pg, external)" >&2; exit 1 ;;
+esac
+
+if [[ "$MODE" == "default" ]]; then
+  PROMPT="$INPUT"
+else
+  PROMPT="[mode: $MODE]
+$INPUT"
+fi
+
+cd "$REPO_ROOT"
+RESULT=$(printf '%s' "$PROMPT" | claude -p --skill rewrite-inline --tools "")
+printf '%s' "$RESULT" | pbcopy
+
+afplay /System/Library/Sounds/Glass.aiff &
+osascript -e 'display notification "Rewritten text copied to clipboard." with title "Rewrite"' &
