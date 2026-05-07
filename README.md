@@ -2,42 +2,6 @@
 
 A personal repository of Claude Code skills, agent profiles, MCP configurations, and growth documentation for an engineer at MongoDB.
 
-## Repository Structure
-
-```
-.
-├── .claude/
-│   ├── skills/                       # Claude Code local skills (YAML front-matter + prompt)
-│   │   ├── growth-notes.md           # Turn feedback threads into growth notes
-│   │   ├── bragsheet-entry.md        # Convert high-impact signals into bragsheet rows
-│   │   ├── weekly-review.md          # Synthesize a weekly note into 3 focus bullets
-│   │   └── rewrite-inline.md         # Rewrite text (default / P&G / external modes)
-│   └── profiles/                     # Agent profiles (skills + MCPs + system prompt)
-│       ├── growth-agent.yaml         # Growth capture — Slack, GitHub, GDocs
-│       ├── reviewer-agent.yaml       # Code/design reviewer — GitHub
-│       └── pg-sync-agent.yaml        # P&G sync — bragsheet → dev plan
-├── bin/                              # CLI scripts (wrappers around `claude`)
-│   ├── growth-capture                # Pipe input → growth-notes + bragsheet-entry
-│   ├── weekly-init                   # Create a new YYYY-WNN.md from template
-│   ├── bragsheet-rollup              # Extract bragsheet rows from weekly notes
-│   ├── pg-sync                       # Draft P&G self-reflection from bragsheet + cycle notes
-│   └── review-agent                  # Run a high-impact code/design review
-├── docs/
-│   ├── bragsheet.md                  # Running bragsheet table, organized by P&G cycle
-│   ├── weekly/                       # Weekly notes (YYYY-WNN.md)
-│   │   └── README.md                 # Template and weekly workflow
-│   └── growth/
-│       ├── README.md                 # P&G and growth documentation overview
-│       ├── signals.md                # Impact signal taxonomy and evidence guide
-│       └── cycles/                   # Per-review-cycle growth notes
-└── mcps/
-    ├── README.md                     # MCP overview
-    ├── glean/config.json             # Glean MCP (covers Slack + all company resources)
-    ├── slack/config.json             # Redirects to Glean
-    ├── github/config.json            # GitHub MCP setup
-    └── gdocs/config.json             # Google Drive MCP setup (for writing/updating docs)
-```
-
 ## Skills
 
 | Skill | Description |
@@ -49,11 +13,11 @@ A personal repository of Claude Code skills, agent profiles, MCP configurations,
 
 ## Agent Profiles
 
-| Profile | Skills | MCPs |
-|---------|--------|------|
-| `growth-agent` | growth-notes, bragsheet-entry, weekly-review, rewrite-inline | glean, gdocs |
-| `reviewer-agent` | rewrite-inline | — (uses `gh` CLI) |
-| `pg-sync-agent` | rewrite-inline, bragsheet-entry | glean |
+| Profile | Purpose |
+|---------|---------|
+| `growth-agent` | Growth notes, bragsheet, weekly review |
+| `reviewer-agent` | Polish your own PR/doc comment replies |
+| `pg-sync-agent` | P&G self-reflection drafting |
 
 ## Bin Scripts
 
@@ -64,6 +28,125 @@ A personal repository of Claude Code skills, agent profiles, MCP configurations,
 | `bin/bragsheet-rollup` | `bin/bragsheet-rollup [--since YYYY-WNN]` — collect bragsheet rows from weekly notes |
 | `bin/pg-sync` | `bin/pg-sync [--cycle YYYY-QN] [--output-file file.md]` — draft P&G self-reflection |
 | `bin/review-agent` | `bin/review-agent --pr 1234` or `--file path.md` — run a high-impact review |
+| `bin/rewrite` | `echo "text" \| bin/rewrite [default\|pg\|external]` — rewrite text, copy to clipboard |
+| `bin/rewrite-reply` | `echo "text" \| bin/rewrite-reply` — polish a PR/doc reply, copy to clipboard |
+
+---
+
+## Mac Shortcuts (Quick Actions)
+
+Four macOS Services that work in **any app** — select text, hit a key, get the result in your clipboard with a sound + notification.
+
+| Shortcut | Script | When to use |
+|----------|--------|-------------|
+| **Rewrite: Default** | `bin/rewrite default` | Slack messages, emails, internal docs |
+| **Rewrite: P&G** | `bin/rewrite pg` | Self-reflection bullets, P&G doc entries |
+| **Rewrite: External** | `bin/rewrite external` | Blog posts, LinkedIn, conference submissions |
+| **Rewrite: Reply** | `bin/rewrite-reply` | Your own PR/doc comment replies (paste just your reply, or the full thread + reply) |
+
+### 1. Install
+
+```bash
+shortcuts/install.sh
+```
+
+This symlinks all four `shortcuts/*.workflow` into `~/Library/Services/`. The repo is the source of truth — pull and re-run to update.
+
+All shortcuts are installed but **inert until you assign a key** in System Settings — so there's no risk of accidental triggering.
+
+### 2. Map keyboard shortcuts
+
+1. Open **System Settings → Keyboard → Keyboard Shortcuts → Services → Text**
+2. Find the four "Rewrite:" entries and double-click to assign keys
+
+Suggested bindings:
+
+| Action | Key |
+|--------|-----|
+| Rewrite: Default | `⌃⌥R` |
+| Rewrite: P&G | `⌃⌥P` |
+| Rewrite: External | `⌃⌥E` |
+| Rewrite: Reply | `⌃⌥Y` |
+
+### 3. Test each shortcut
+
+Copy the example text below into any editor (Notes, TextEdit, VS Code), select it, trigger the shortcut, then paste (`⌘V`) to see the result.
+
+---
+
+**Rewrite: Default** `⌃⌥R`
+
+Use for: Slack messages, internal emails, doc comments — anything you wrote quickly and want to tighten before sending.
+
+```
+hey so i wanted to flag that the latency issue we saw last week is probably related
+to the connection pool config. i think maybe we should look at increasing the max
+connections but i'm not 100% sure, could be something else too. let me know what
+you think and if you want i can take a look at it more next week
+```
+
+Expected: one or two clear sentences, hedges removed, action item surfaced.
+
+---
+
+**Rewrite: P&G** `⌃⌥P`
+
+Use for: P&G self-reflection bullets, bragsheet entries, performance review text — anything where you need to lead with outcome and show leadership signal.
+
+```
+I worked on improving the MCP server setup and helped a few other teams get it
+running. I also wrote some documentation and joined a couple of cross-team meetings
+to answer questions about how it works.
+```
+
+Expected: leads with impact ("Reduced onboarding time…"), tags a Leadership Principle in parentheses, `[NEEDS EVIDENCE]` where a claim lacks a citable artifact.
+
+---
+
+**Rewrite: External** `⌃⌥E`
+
+Use for: LinkedIn posts, blog drafts, conference CFPs — anything going outside MongoDB where internal names and Jira refs mean nothing.
+
+```
+At MongoDB we used our internal Remote MCP gateway (tracked in CLOUDP-99812) to
+connect Claude Code to Atlas and internal tooling. The DX team and DevProd worked
+together to ship this as part of our AI developer experience initiative.
+```
+
+Expected: Jira ref removed, internal team names dropped or replaced with "our team", "Remote MCP" explained briefly for an external audience.
+
+---
+
+**Rewrite: Reply** `⌃⌥Y`
+
+Use for: your draft reply in a GitHub PR thread, a Notion/Google Doc comment, or a design review. Select your reply alone, or the full thread + your reply — it handles both.
+
+```
+[Thread context]
+Why are we scanning the full collection here instead of using an index? This will
+degrade badly at scale.
+
+[Your draft reply]
+yeah thats a fair point, we do have an index on that field but its not being used
+because of the query shape. i can add a hint or restructure the query, not sure
+which is better, probably the hint is easier but restructuring would be cleaner
+long term. will take a look
+```
+
+Select everything above, trigger `⌃⌥Y`. Expected: only your reply comes back, tightened — the thread context is used for understanding but not included in output.
+
+> Select just your reply (without the thread) if you don't need the model to see the context.
+
+### Troubleshooting
+
+| Symptom | Fix |
+|---------|-----|
+| Shortcuts don't appear in Services menu | Re-run `shortcuts/install.sh`; log out and back in |
+| No sound / no notification | Check that `bin/rewrite` is executable: `chmod +x bin/rewrite bin/rewrite-reply` |
+| Empty clipboard after trigger | Run `echo "test" \| bin/rewrite` in terminal to see the error |
+| `claude: command not found` | Add `~/.local/bin` to PATH in your shell profile |
+
+---
 
 ## Workflows
 
@@ -86,17 +169,33 @@ bin/review-agent --pr 1234
 bin/review-agent --file docs/design.md --output-file review.md
 ```
 
-## MongoDB Leadership Principles
-
-- **Act Like Owners** — end-to-end responsibility; long-term thinking
-- **Communicate with Clarity** — precise, structured, audience-aware
-- **Focus on Outcomes** — impact over activity; define success first
-- **Never Stop Learning** — seek feedback, reflect, improve continuously
-- **Build Extraordinary Teams** — hire, develop, and create inclusive environments
-
 ## Setup
 
 1. Clone this repo.
-2. Run `chmod +x bin/*` to make scripts executable.
-3. Configure MCPs using the setup steps in `mcps/*/config.json` and add them to your Claude Code MCP settings.
-4. Run `bin/weekly-init` to create your first weekly note.
+2. Run `shortcuts/install.sh` to activate the Mac shortcuts.
+3. Run `bin/weekly-init` to create your first weekly note.
+
+### Separate data repo (optional)
+
+All bin scripts read and write to `$GROWTH_REPO` when set, falling back to `docs/` inside this repo.
+
+To keep personal notes in a separate repository:
+
+```bash
+# in your shell profile (~/.zshrc)
+export GROWTH_REPO=~/Projects/growth-notes/docs
+```
+
+Expected layout of the data repo:
+```
+growth-notes/
+  docs/
+    bragsheet.md
+    weekly/
+    growth/
+      cycles/
+      signals.md
+    slack-notes/
+```
+
+No changes to any script needed — set the env var and the tools follow.

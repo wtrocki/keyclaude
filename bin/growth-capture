@@ -11,7 +11,8 @@ set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 REPO_ROOT="$(dirname "$SCRIPT_DIR")"
-APPEND_FILE="${APPEND_FILE:-$REPO_ROOT/docs/bragsheet.md}"
+DATA_ROOT="${GROWTH_REPO:-$REPO_ROOT/docs}"
+APPEND_FILE="${APPEND_FILE:-$DATA_ROOT/bragsheet.md}"
 OUTPUT_FILE=""
 
 while [[ $# -gt 0 ]]; do

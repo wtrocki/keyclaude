@@ -38,10 +38,11 @@ link_workflow() {
 }
 
 link_workflow "Rewrite: Default"
+link_workflow "Rewrite: Reply"
 link_workflow "Rewrite: P&G"
 link_workflow "Rewrite: External"
 
 echo ""
-echo "Done. To assign keyboard shortcuts:"
+echo "Done. Shortcuts are installed but inert until you assign keys manually."
 echo "  System Settings → Keyboard → Keyboard Shortcuts → Services → Text"
-echo "  Suggested: ⌃⌥R = Default   ⌃⌥P = P&G   ⌃⌥E = External"
+echo "  Suggested: ⌃⌥R = Default   ⌃⌥Y = Reply   ⌃⌥P = P&G   ⌃⌥E = External"

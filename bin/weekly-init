@@ -8,7 +8,8 @@ set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 REPO_ROOT="$(dirname "$SCRIPT_DIR")"
-WEEKLY_DIR="$REPO_ROOT/docs/weekly"
+DATA_ROOT="${GROWTH_REPO:-$REPO_ROOT/docs}"
+WEEKLY_DIR="$DATA_ROOT/weekly"
 
 if [[ $# -ge 1 ]]; then
   WEEK="$1"
