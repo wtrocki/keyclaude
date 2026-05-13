@@ -69,14 +69,14 @@ Four macOS Services that work in **any app** — select text, hit a key, get the
 shortcuts/install.sh
 ```
 
-This symlinks all four `shortcuts/*.workflow` into `~/Library/Services/`. The repo is the source of truth — pull and re-run to update.
+This symlinks the three `shortcuts/*.workflow` into `~/Library/Services/`. The repo is the source of truth — pull and re-run to update.
 
 All shortcuts are installed but **inert until you assign a key** in System Settings — so there's no risk of accidental triggering.
 
 ### 2. Map keyboard shortcuts
 
 1. Open **System Settings → Keyboard → Keyboard Shortcuts → Services → Text**
-2. Find the four "Rewrite:" entries and double-click to assign keys
+2. Find the three "Rewrite:" entries and double-click to assign keys
 
 Suggested bindings:
 
@@ -159,16 +159,9 @@ Raycast Script Commands read from clipboard rather than selected text. Copy the 
 1. [Install Raycast](https://www.raycast.com/) if you haven't already.
 2. Open Raycast → **Settings → Extensions → Script Commands**.
 3. Click **Add Directories** and select `shortcuts/raycast/` inside this repo.
-4. The four "Rewrite:" commands appear immediately — keyboard shortcuts are pre-configured in the script headers.
+4. The three commands appear immediately — keyboard shortcuts are pre-configured in the script headers.
 
-### Troubleshooting
-
-| Symptom | Fix |
-|---------|-----|
-| Commands not appearing | Confirm the `shortcuts/raycast/` directory is added in Raycast Settings |
-| Permission denied | Run `chmod +x shortcuts/raycast/*.sh` |
-| Empty clipboard after trigger | Run `pbpaste \| bin/rewrite default` in terminal to see the error |
-| `claude: command not found` | Add `~/.local/bin` and `/opt/homebrew/bin` to PATH in your shell profile |
+See [`shortcuts/raycast/README.md`](shortcuts/raycast/README.md) for full setup details and troubleshooting.
 
 ---
 
