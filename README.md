@@ -12,7 +12,7 @@ Two problems eat engineer time quietly:
 
 ## What's here
 
-- **Mac shortcuts** — four Quick Actions (select text → refined version in clipboard) for internal writing, P&G bullets, public content, and PR replies
+- **Mac shortcuts** — four Quick Actions via macOS Services or Raycast (copy text → refined version in clipboard) for internal writing, P&G bullets, public content, and PR replies
 - **Growth capture** — pipe any Slack thread or feedback note through Claude to extract career signals and append bragsheet rows
 - **Weekly notes** — templated weekly notes with automatic bragsheet signal extraction
 - **P&G sync** — synthesize weeks of notes into a self-reflection draft aligned to MongoDB Leadership Principles
@@ -166,6 +166,39 @@ Select everything above, trigger `⌃⌥Y`. Expected: only your reply comes back
 
 ---
 
+## Raycast Shortcuts (Alternative)
+
+Raycast Script Commands are a simpler alternative to macOS Services — no Info.plist, no cache flushing. Scripts live in `shortcuts/raycast/` and are loaded directly by Raycast.
+
+**Flow difference:** Raycast commands read from clipboard rather than selected text. Copy the text you want to rewrite, then trigger the shortcut. The result lands back in your clipboard.
+
+| Command | Key | Script |
+|---------|-----|--------|
+| Rewrite: Default | `⌃⌥R` | `rewrite-default.sh` |
+| Rewrite: Reply | `⌃⌥Y` | `rewrite-reply.sh` |
+| Rewrite: P&G | `⌃⌥P` | `rewrite-png.sh` |
+| Rewrite: External | `⌃⌥E` | `rewrite-external.sh` |
+
+### Setup
+
+1. [Install Raycast](https://www.raycast.com/) if you haven't already.
+2. Open Raycast → **Settings → Extensions → Script Commands**.
+3. Click **Add Directories** and select `shortcuts/raycast/` inside this repo.
+4. The four "Rewrite:" commands appear immediately — keyboard shortcuts are pre-configured in the script headers.
+
+> Raycast picks up file changes live — pulling this repo automatically updates the commands.
+
+### Troubleshooting
+
+| Symptom | Fix |
+|---------|-----|
+| Commands not appearing | Confirm the `shortcuts/raycast/` directory is added in Raycast Settings → Extensions → Script Commands |
+| Permission denied | Run `chmod +x shortcuts/raycast/*.sh` |
+| Empty clipboard after trigger | Run `pbpaste \| bin/rewrite default` in terminal to see the error |
+| `claude: command not found` | Add `~/.local/bin` and `/opt/homebrew/bin` to PATH in your shell profile |
+
+---
+
 ## Workflows
 
 ### Weekly capture
@@ -190,7 +223,9 @@ bin/review-agent --file docs/design.md --output-file review.md
 ## Setup
 
 1. Clone this repo.
-2. Run `shortcuts/install.sh` to activate the Mac shortcuts.
+2. Activate shortcuts — pick one:
+   - **macOS Services:** run `shortcuts/install.sh`, then log out/in, then assign keys in System Settings → Keyboard → Shortcuts → Services → Text
+   - **Raycast:** add `shortcuts/raycast/` as a Script Commands directory in Raycast Settings
 3. Run `bin/weekly-init` to create your first weekly note.
 
 ### Separate data repo (optional)
