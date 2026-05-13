@@ -1,6 +1,6 @@
 # Slides
 
-reveal.js slide decks built from Markdown via pandoc.
+reveal.js slide decks built from Markdown via pandoc using lovely green theme.
 
 ## Tool
 

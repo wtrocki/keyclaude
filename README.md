@@ -45,6 +45,8 @@ Agents deliver scheduled lessons based on user-triggered sessions — coaching t
 | **Leadership feedback** | After a notable thread, review, or decision | `pbpaste \| bin/leadership-feedback` |
 | **Weekly** | Monday to create, Friday to review | `bin/weekly-init` / `bin/weekly-review` |
 
+NOTE: Lefership feedback and Weekly are advanced features. 
+
 ### Install
 
 ```bash
