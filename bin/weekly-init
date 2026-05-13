@@ -29,7 +29,7 @@ mkdir -p "$WEEKLY_DIR"
 cat > "$FILE" << EOF
 # Week ${WEEK}
 
-> Cycle priorities: <!-- copy your current cycle goals here -->
+> Week priorities: <!-- copy your current week priorities here -->
 
 ## Planned
 
@@ -51,10 +51,11 @@ cat > "$FILE" << EOF
 
 -
 
-## Bragsheet Signal ⭐
+## Impact Items
 
-> <!-- Run: pbpaste | bin/growth-capture, then paste any table row output here -->
-> <!-- Only lines starting with | are extracted by bragsheet-rollup -->
+> <!-- High-impact work that surfaced this week. For each: does it fit priorities? Is there capacity? -->
+
+-
 
 EOF
 

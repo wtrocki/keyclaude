@@ -3,9 +3,9 @@
 #
 # Usage:
 #   echo "draft text" | bin/rewrite [mode]
-#   pbpaste | bin/rewrite pg
+#   pbpaste | bin/rewrite leadership
 #
-# Modes: default (default), pg, external
+# Modes: default (default), leadership, external
 set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
@@ -19,8 +19,8 @@ if [[ -z "$INPUT" ]]; then
 fi
 
 case "$MODE" in
-  default|pg|external) ;;
-  *) echo "Unknown mode: $MODE (valid: default, pg, external)" >&2; exit 1 ;;
+  default|leadership|external) ;;
+  *) echo "Unknown mode: $MODE (valid: default, leadership, external)" >&2; exit 1 ;;
 esac
 
 if [[ "$MODE" == "default" ]]; then

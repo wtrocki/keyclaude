@@ -6,13 +6,13 @@
 #
 # After installing:
 #   1. Select text in any app
-#   2. Right-click → Services → "Rewrite: Default / P&G / External"
+#   2. Right-click → Services → "Rewrite: Default / Leadership / External"
 #      (or use the keyboard shortcuts you assign below)
 #   3. Rewritten text lands in your clipboard; Glass sound plays
 #
 # Assign keyboard shortcuts:
 #   System Settings → Keyboard → Keyboard Shortcuts → Services → Text
-#   Suggested: ⌃⌥R = Default   ⌃⌥P = P&G   ⌃⌥E = External
+#   Suggested: ⌃⌥R = Default   ⌃⌥P = Leadership   ⌃⌥E = External
 set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
@@ -38,11 +38,10 @@ link_workflow() {
 }
 
 link_workflow "Rewrite: Default"
-link_workflow "Rewrite: Reply"
-link_workflow "Rewrite: P&G"
+link_workflow "Rewrite: Leadership"
 link_workflow "Rewrite: External"
 
 echo ""
 echo "Done. Shortcuts are installed but inert until you assign keys manually."
 echo "  System Settings → Keyboard → Keyboard Shortcuts → Services → Text"
-echo "  Suggested: ⌃⌥R = Default   ⌃⌥Y = Reply   ⌃⌥P = P&G   ⌃⌥E = External"
+echo "  Suggested: ⌃⌥R = Default   ⌃⌥P = Leadership   ⌃⌥E = External"

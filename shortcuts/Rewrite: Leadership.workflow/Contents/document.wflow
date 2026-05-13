@@ -60,9 +60,9 @@
                 <dict>
                     <key>COMMAND_STRING</key>
                     <string>export PATH="/usr/local/bin:/opt/homebrew/bin:$HOME/.local/bin:$PATH"
-REAL=$(python3 -c "import os; print(os.path.realpath('$HOME/Library/Services/Rewrite: P&amp;G.workflow'))")
+REAL=$(python3 -c "import os; print(os.path.realpath('$HOME/Library/Services/Rewrite: Leadership.workflow'))")
 REPO_ROOT="$(dirname "$(dirname "$REAL")")"
-"$REPO_ROOT/bin/rewrite" pg</string>
+"$REPO_ROOT/bin/rewrite" leadership</string>
                     <key>CheckedForUserDefaultShell</key>
                     <true/>
                     <key>inputMethod</key>

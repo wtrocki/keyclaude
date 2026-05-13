@@ -1,55 +1,57 @@
 # aiskills
 
-A personal AI operating layer for a Staff engineer — version-controlled skills, agent profiles, and keyboard shortcuts that reduce friction in writing and career tracking.
+A personal AI operating layer for staff engineering — skills, agents, and keyboard shortcuts that reduce friction in communication and leadership development.
 
 ## Why this exists
 
 Two problems eat engineer time quietly:
 
-**Writing.** Slack messages, PR replies, design doc comments, performance review bullets — you write a draft, it's rough, you spend five minutes fixing it or you send it rough. Neither is great. The shortcuts in this repo let you select any text, hit a key, and get a polished version in your clipboard in seconds — without leaving the app you're in.
+**Writing.** Slack messages, PR replies, design doc comments — you write a draft, it's rough, you spend five minutes fixing it or you send it rough. Neither is great. The shortcuts here let you select any text, hit a key, and get a polished version in your clipboard in seconds — without leaving the app you're in.
 
-**Career tracking.** High-impact work is invisible if you don't capture it. A Slack thread where you unblocked three teams, an incident where your decision mattered, a review that changed the design — these events fade fast. The growth tools here turn raw input (paste a thread, paste a feedback note) into structured bragsheet rows and weekly signals automatically, so P&G and performance review prep become a rollup rather than an excavation.
+**Leadership visibility.** Staff-level work is invisible if you don't frame it correctly. A Slack thread where you unblocked three teams, an incident where your decision changed the outcome, a review that shifted the design direction — these are leadership moments most engineers don't surface. The tools here help identify, frame, and amplify those signals before they fade.
 
-## What's here
+## 3 Daily Actions
 
-- **Mac shortcuts** — four Quick Actions via macOS Services or Raycast (copy text → refined version in clipboard) for internal writing, P&G bullets, public content, and PR replies
-- **Growth capture** — pipe any Slack thread or feedback note through Claude to extract career signals and append bragsheet rows
-- **Weekly notes** — templated weekly notes with automatic bragsheet signal extraction
-- **P&G sync** — synthesize weeks of notes into a self-reflection draft aligned to [Leadership Principles](https://www.mongodb.com/company/leadership-principles)
-- **Review agent** — Staff-level framing for PR and design doc reviews
-
-Everything is a bash script or a markdown file. No framework, no dependencies beyond the `claude` CLI and standard macOS tools.
+| Action | When | How |
+|--------|------|-----|
+| **Rewrite** | Before sending anything important | Select text → `⌃⌥R` (or copy → Raycast) |
+| **Leadership feedback** | After a notable Slack thread, review, or decision | `pbpaste \| bin/leadership-feedback` |
+| **Weekly** | Monday to create, Friday to review | `bin/weekly-init` / `bin/weekly-review` |
 
 ## Skills
 
-| Skill | Description |
+Skills are stateless — they transform input into structured output. No session state, no context.
+
+| Skill | What it does |
 |-------|-------------|
-| `growth-notes` | Turn feedback threads into 6-section growth notes with high-impact signal detection and cross-team tagging. |
-| `bragsheet-entry` | Convert a growth input into a single bragsheet table row, or output a no-signal comment. |
-| `weekly-review` | Synthesize a weekly note into 3 bullets: Focus Check, Cross-team Quality, Priority Shift. |
-| `rewrite-inline` | Rewrite text for clarity (default), P&G self-reflection (pg), or public content (external). |
+| `rewrite-inline` | Rewrite text in three modes: `default` (internal comms), `leadership` (outcome-first, evidence-flagged), `external` (public-facing) |
+| `leadership-feedback` | Analyze a thread or message: signals present, signals missing, one concrete follow-up recommendation |
+| `weekly-review` | Synthesize a weekly note into four bullets: Focus Check, Cross-team Quality, Priority Shift, Priority Judgment |
 
 ## Agent Profiles
 
+Agents are coaching contexts — they hold a persona and use skills for deeper analysis.
+
 | Profile | Purpose |
 |---------|---------|
-| `growth-agent` | Growth notes, bragsheet, weekly review |
-| `reviewer-agent` | Polish your own PR/doc comment replies |
-| `pg-sync-agent` | P&G self-reflection drafting |
+| `leadership-agent` | Staff engineering coaching: analyzes notes and threads, identifies leadership signals, coaches toward staff engineering patterns |
+
+Run interactively:
+
+```bash
+claude --profile .claude/profiles/leadership-agent.yaml
+```
+
+Paste a weekly note, a Slack thread, or a design doc excerpt. The agent coaches on what leadership signals are present, what's missing, and how to reframe.
 
 ## Bin Scripts
 
 | Script | Usage |
 |--------|-------|
-| `bin/growth-capture` | `pbpaste \| bin/growth-capture` — pipe a growth input through growth-notes and bragsheet-entry |
+| `bin/rewrite` | `echo "text" \| bin/rewrite [default\|leadership\|external]` — rewrite text, copy to clipboard |
+| `bin/leadership-feedback` | `pbpaste \| bin/leadership-feedback` — analyze a thread, copy result to clipboard |
 | `bin/weekly-init` | `bin/weekly-init [YYYY-WNN]` — create a new weekly note from template |
-| `bin/bragsheet-rollup` | `bin/bragsheet-rollup [--since YYYY-WNN]` — collect bragsheet rows from weekly notes |
-| `bin/pg-sync` | `bin/pg-sync [--cycle YYYY-QN] [--output-file file.md]` — draft P&G self-reflection |
-| `bin/review-agent` | `bin/review-agent --pr 1234` or `--file path.md` — run a high-impact review |
-| `bin/rewrite` | `echo "text" \| bin/rewrite [default\|pg\|external]` — rewrite text, copy to clipboard |
-| `bin/rewrite-reply` | `echo "text" \| bin/rewrite-reply` — polish a PR/doc reply, copy to clipboard |
-
----
+| `bin/weekly-review` | `bin/weekly-review [YYYY-WNN]` — synthesize the week's note into four bullets |
 
 ## Mac Shortcuts (Quick Actions)
 
@@ -58,9 +60,8 @@ Four macOS Services that work in **any app** — select text, hit a key, get the
 | Shortcut | Script | When to use |
 |----------|--------|-------------|
 | **Rewrite: Default** | `bin/rewrite default` | Slack messages, emails, internal docs |
-| **Rewrite: P&G** | `bin/rewrite pg` | Self-reflection bullets, P&G doc entries |
+| **Rewrite: Leadership** | `bin/rewrite leadership` | Self-reflection bullets, impact framing |
 | **Rewrite: External** | `bin/rewrite external` | Blog posts, LinkedIn, conference submissions |
-| **Rewrite: Reply** | `bin/rewrite-reply` | Your own PR/doc comment replies (paste just your reply, or the full thread + reply) |
 
 ### 1. Install
 
@@ -82,13 +83,12 @@ Suggested bindings:
 | Action | Key |
 |--------|-----|
 | Rewrite: Default | `⌃⌥R` |
-| Rewrite: P&G | `⌃⌥P` |
+| Rewrite: Leadership | `⌃⌥P` |
 | Rewrite: External | `⌃⌥E` |
-| Rewrite: Reply | `⌃⌥Y` |
 
 ### 3. Test each shortcut
 
-Copy the example text below into any editor (Notes, TextEdit, VS Code), select it, trigger the shortcut, then paste (`⌘V`) to see the result.
+Copy the example text below into any editor, select it, trigger the shortcut, then paste (`⌘V`) to see the result.
 
 ---
 
@@ -107,9 +107,9 @@ Expected: one or two clear sentences, hedges removed, action item surfaced.
 
 ---
 
-**Rewrite: P&G** `⌃⌥P`
+**Rewrite: Leadership** `⌃⌥P`
 
-Use for: P&G self-reflection bullets, bragsheet entries, performance review text — anything where you need to lead with outcome and show leadership signal.
+Use for: self-reflection bullets, impact framing, performance review text — anything where you need to lead with outcome and show leadership signal.
 
 ```
 I worked on improving the MCP server setup and helped a few other teams get it
@@ -117,27 +117,27 @@ running. I also wrote some documentation and joined a couple of cross-team meeti
 to answer questions about how it works.
 ```
 
-Expected: leads with impact ("Reduced onboarding time…"), tags a Leadership Principle in parentheses, `[NEEDS EVIDENCE]` where a claim lacks a citable artifact.
+Expected: leads with impact ("Reduced onboarding time…"), `[NEEDS EVIDENCE]` where a claim lacks a citable artifact, Leadership Principle in parentheses.
 
 ---
 
 **Rewrite: External** `⌃⌥E`
 
-Use for: LinkedIn posts, blog drafts, conference CFPs — anything going outside your organization where internal names and ticket refs mean nothing.
+Use for: LinkedIn posts, blog drafts, conference CFPs — anything going outside your organization.
 
 ```
-At our company we used our internal tool to
-connect Claude Code to internal tooling. The DX team and DevProd worked
-together to ship this as part of our AI developer experience initiative.
+At our company we used our internal tool to connect Claude Code to internal tooling.
+The DX team and DevProd worked together to ship this as part of our AI developer
+experience initiative.
 ```
 
-Expected: Jira ref removed, internal team names dropped or replaced with "our team", "Remote MCP" explained briefly for an external audience.
+Expected: internal team names dropped or replaced, internal tool names explained briefly for an external audience.
 
 ---
 
 **Rewrite: Reply** `⌃⌥Y`
 
-Use for: your draft reply in a GitHub PR thread, a Notion/Google Doc comment, or a design review. Select your reply alone, or the full thread + your reply — it handles both.
+Use for: your draft reply in a GitHub PR thread or design review.
 
 ```
 [Thread context]
@@ -151,16 +151,14 @@ which is better, probably the hint is easier but restructuring would be cleaner
 long term. will take a look
 ```
 
-Select everything above, trigger `⌃⌥Y`. Expected: only your reply comes back, tightened — the thread context is used for understanding but not included in output.
-
-> Select just your reply (without the thread) if you don't need the model to see the context.
+Expected: only your reply comes back, tightened — thread context is used for understanding but not included in output.
 
 ### Troubleshooting
 
 | Symptom | Fix |
 |---------|-----|
 | Shortcuts don't appear in Services menu | Re-run `shortcuts/install.sh`; log out and back in |
-| No sound / no notification | Check that `bin/rewrite` is executable: `chmod +x bin/rewrite bin/rewrite-reply` |
+| No sound / no notification | Check that `bin/rewrite` is executable: `chmod +x bin/rewrite` |
 | Empty clipboard after trigger | Run `echo "test" \| bin/rewrite` in terminal to see the error |
 | `claude: command not found` | Add `~/.local/bin` to PATH in your shell profile |
 
@@ -168,15 +166,13 @@ Select everything above, trigger `⌃⌥Y`. Expected: only your reply comes back
 
 ## Raycast Shortcuts (Alternative)
 
-Raycast Script Commands are a simpler alternative to macOS Services — no Info.plist, no cache flushing. Scripts live in `shortcuts/raycast/` and are loaded directly by Raycast.
-
-**Flow difference:** Raycast commands read from clipboard rather than selected text. Copy the text you want to rewrite, then trigger the shortcut. The result lands back in your clipboard.
+Raycast Script Commands read from clipboard rather than selected text. Copy the text you want to rewrite, then trigger the shortcut. The result lands back in your clipboard.
 
 | Command | Key | Script |
 |---------|-----|--------|
 | Rewrite: Default | `⌃⌥R` | `rewrite-default.sh` |
 | Rewrite: Reply | `⌃⌥Y` | `rewrite-reply.sh` |
-| Rewrite: P&G | `⌃⌥P` | `rewrite-png.sh` |
+| Rewrite: Leadership | `⌃⌥P` | `rewrite-leadership.sh` |
 | Rewrite: External | `⌃⌥E` | `rewrite-external.sh` |
 
 ### Setup
@@ -186,53 +182,75 @@ Raycast Script Commands are a simpler alternative to macOS Services — no Info.
 3. Click **Add Directories** and select `shortcuts/raycast/` inside this repo.
 4. The four "Rewrite:" commands appear immediately — keyboard shortcuts are pre-configured in the script headers.
 
-> Raycast picks up file changes live — pulling this repo automatically updates the commands.
-
 ### Troubleshooting
 
 | Symptom | Fix |
 |---------|-----|
-| Commands not appearing | Confirm the `shortcuts/raycast/` directory is added in Raycast Settings → Extensions → Script Commands |
+| Commands not appearing | Confirm the `shortcuts/raycast/` directory is added in Raycast Settings |
 | Permission denied | Run `chmod +x shortcuts/raycast/*.sh` |
 | Empty clipboard after trigger | Run `pbpaste \| bin/rewrite default` in terminal to see the error |
 | `claude: command not found` | Add `~/.local/bin` and `/opt/homebrew/bin` to PATH in your shell profile |
 
 ---
 
-## Workflows
+## Daily Workflows
 
-### Weekly capture
+### Communication rewrite
 ```bash
-bin/weekly-init                         # create this week's note
-# ... work through the week ...
-pbpaste | bin/growth-capture            # capture a Slack thread, feedback, or incident
+echo "rough draft" | bin/rewrite              # default: tighten for internal comms
+pbpaste | bin/rewrite leadership              # outcome-first, evidence-flagged
+pbpaste | bin/rewrite external               # strip internals, add context
 ```
 
-### Cycle rollup
+### Leadership feedback on a thread
 ```bash
-bin/bragsheet-rollup --append-file docs/bragsheet.md
-bin/pg-sync --output-file docs/growth/cycles/2026-Q2.md
+pbpaste | bin/leadership-feedback            # result → clipboard + saved to engineering-notes/leadership-log.md
 ```
 
-### Code or design review
+### Weekly cadence
 ```bash
-bin/review-agent --pr 1234
-bin/review-agent --file docs/design.md --output-file review.md
+bin/weekly-init                              # Monday: create this week's note in engineering-notes
+# ... fill in Planned, Done, Impact Items as the week unfolds ...
+bin/weekly-review                            # Friday: synthesize + append ## Weekly Review to the note
+bin/weekly-review 2026-W19                  # or specify a week explicitly
 ```
 
-## Setup
+---
 
-1. Clone this repo.
-2. Activate shortcuts — pick one:
-   - **macOS Services:** run `shortcuts/install.sh`, then log out/in, then assign keys in System Settings → Keyboard → Shortcuts → Services → Text
-   - **Raycast:** add `shortcuts/raycast/` as a Script Commands directory in Raycast Settings
-3. Run `bin/weekly-init` to create your first weekly note.
+## Coaching Layer
 
-### Data repo (engineering-notes)
+The `leadership-agent` profile provides interactive AI coaching toward a staff engineering profile. Run it directly:
 
-Execution (skills, bin scripts, shortcuts) lives here. Personal notes and data live in a separate `engineering-notes` repo to keep private content out of this repo.
+```bash
+claude --profile .claude/profiles/leadership-agent.yaml
+```
 
-All bin scripts read and write to `$GROWTH_REPO` when set, falling back to `docs/` inside this repo.
+Paste a weekly note, a Slack thread, a design doc excerpt, or a message draft. The agent:
+- Identifies which leadership signals are present and which are missing
+- Coaches on how to reframe work to show scope and organizational impact
+- Uses the `rewrite-inline` skill to polish specific messages on request
+- Can search across your notes and Slack history via the Glean MCP
+
+For longer-term coaching, the agent can be given context from your `engineering-notes` repo — growth opportunities, past decisions, and patterns across weeks. Set `$GROWTH_REPO` and point the agent at specific files for richer analysis.
+
+---
+
+## Two-repo model
+
+This repo (`aiskills`) is the **engine**: skills, agents, bin scripts, and shortcuts. It contains no personal data.
+
+Your `engineering-notes` repo is the **data layer**: weekly notes, leadership log, MongoDB-specific context, and anything work-specific. The engine reads from it and writes back to it — every action that produces output contributes back.
+
+```
+aiskills/                          engineering-notes/data/
+  bin/weekly-init      ──writes──▶   weekly/YYYY-WNN.md
+  bin/weekly-review    ──reads ──▶   weekly/YYYY-WNN.md
+                       ──writes──▶   weekly/YYYY-WNN.md  (## Weekly Review appended)
+  bin/leadership-feedback ─reads──▶  (stdin)
+                       ──writes──▶   leadership-log.md
+```
+
+Set `$GROWTH_REPO` once and all scripts follow:
 
 ```bash
 # in your shell profile (~/.zshrc)
@@ -240,24 +258,19 @@ export GROWTH_REPO=~/Projects/engineering-notes/data
 ```
 
 Expected layout of the data repo:
+
 ```
 engineering-notes/
   data/
-    bragsheet.md
-    weekly/
-    growth/
-      cycles/
-      signals.md
-    slack-notes/
+    weekly/              # weekly notes (created by weekly-init)
+    leadership-log.md    # timestamped leadership feedback entries (created on first use)
 ```
 
-No changes to any script needed — set the env var and the tools follow.
+## Setup
 
----
-
-## Gaps / Known Missing
-
-| Gap | Notes |
-|-----|-------|
-| `bin/weekly-review` | Skill exists (`weekly-review`) but no bin wrapper. Should run the skill on a weekly note and print the 3-bullet summary (Focus Check, Cross-team Quality, Priority Shift). |
-| Code review profile | `bin/review-agent` sends PR review requests to `reviewer-agent`, which is built for reply polishing. A separate `code-review-agent` profile with Staff-level review framing would better serve that use case. |
+1. Clone this repo.
+2. Set `$GROWTH_REPO` in your shell profile (see above).
+3. Activate shortcuts — pick one:
+   - **macOS Services:** run `shortcuts/install.sh`, then log out/in, then assign keys in System Settings → Keyboard → Shortcuts → Services → Text
+   - **Raycast:** add `shortcuts/raycast/` as a Script Commands directory in Raycast Settings
+4. Run `bin/weekly-init` to create your first weekly note.

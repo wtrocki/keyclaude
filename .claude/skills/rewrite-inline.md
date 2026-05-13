@@ -1,6 +1,6 @@
 ---
 name: rewrite-inline
-description: Rewrite selected text to be clearer, more professional, and outcome-focused while preserving meaning. Supports three modes — default, P&G doc, and external — selected via a mode prefix in the user's input.
+description: Rewrite selected text to be clearer, more professional, and outcome-focused while preserving meaning. Supports three modes — default, leadership, and external — selected via a mode prefix in the user's input.
 ---
 
 The user may optionally prefix their input with a mode directive. If no mode is specified, use `default`.
@@ -17,8 +17,8 @@ General-purpose rewrite for internal communication (Slack, email, docs).
 - Do not add new ideas, promises, or commitments.
 - Return only the rewritten text — no intro, no bullets, no explanation.
 
-`[mode: pg]`
-P&G self-reflection rewrite. Activates evidence-aware, Leadership Principle-aligned output.
+`[mode: leadership]`
+Leadership-aligned rewrite. Activates evidence-aware, outcome-first output aligned to Staff engineering and Leadership Principles.
 - Lead each paragraph or bullet with the outcome, not the activity. ("Reduced launch risk…" not "I worked on the runbook…")
 - Where the original text makes a claim about impact or adoption, preserve any cited evidence. If a claim lacks a link or citable artifact, append `[NEEDS EVIDENCE]` inline — do not invent evidence.
 - When the text describes a behavior that maps to a Leadership Principle, surface the principle name in parentheses at the end of the sentence. Example: "(Leaders communicate with clarity)"

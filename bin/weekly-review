@@ -1,0 +1,41 @@
+#!/usr/bin/env bash
+# weekly-review — run the weekly-review skill on the current (or specified) week's note.
+# Appends the 4-bullet synthesis as a ## Weekly Review section back to the note.
+#
+# Usage:
+#   bin/weekly-review              # auto-detects current ISO week (e.g. 2026-W18)
+#   bin/weekly-review 2026-W19    # specify week explicitly
+#
+# Output: prints the synthesis to stdout and appends it to the weekly note.
+set -euo pipefail
+
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+REPO_ROOT="$(dirname "$SCRIPT_DIR")"
+DATA_ROOT="${GROWTH_REPO:-$REPO_ROOT/../engineering-notes}"
+WEEKLY_DIR="$DATA_ROOT/weekly"
+
+if [[ $# -ge 1 ]]; then
+  WEEK="$1"
+else
+  WEEK=$(date +"%Y-W%V")
+fi
+
+FILE="$WEEKLY_DIR/${WEEK}.md"
+
+if [[ ! -f "$FILE" ]]; then
+  echo "Error: weekly note not found: $FILE" >&2
+  echo "Run 'bin/weekly-init ${WEEK}' to create it." >&2
+  exit 1
+fi
+
+SKILL_BODY=$(awk 'BEGIN{c=0} /^---$/{c++;next} c>=2{print}' "$REPO_ROOT/.claude/skills/weekly-review.md")
+SYNTHESIS=$(printf '%s' "$(cat "$FILE")" | claude -p --system-prompt "$SKILL_BODY" --tools "")
+
+printf '%s\n' "$SYNTHESIS"
+
+# Append synthesis back to the weekly note (skip if section already exists)
+if ! grep -q "^## Weekly Review" "$FILE"; then
+  printf '\n## Weekly Review\n\n%s\n' "$SYNTHESIS" >> "$FILE"
+  echo "" >&2
+  echo "Appended to: $FILE" >&2
+fi
