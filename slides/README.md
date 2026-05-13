@@ -1,6 +1,6 @@
 # Slides
 
-Slide decks built from Markdown via pandoc. One script, four modes.
+Slide decks built from Markdown via pandoc.
 
 ## Build commands
 
@@ -10,22 +10,19 @@ Slide decks built from Markdown via pandoc. One script, four modes.
 
 # PowerPoint
 ./build.sh "examples/My Deck.md" --pptx
-
-# HTML + narration audio (floating player, you advance slides manually)
-./build.sh "examples/My Deck.md" --narrate
-./build.sh "examples/My Deck.md" --narrate --voice Samantha --rate 175
-
-# Read aloud in terminal, slide by slide
-./build.sh "examples/My Deck.md" --speak
 ```
-
-`--narrate` and `--speak` require macOS. List voices: `say -v ?`
 
 ## Narration
 
-`--narrate` generates a single `<deck>-narration.m4a` for the whole deck (slides joined with 1.5s silence) and embeds a floating audio player in the HTML. You control slide transitions manually; audio plays continuously.
+Use `/slides` in Claude Code — it will ask if you want a narration script and generate `<deck>-narration.txt` for you. Then run:
 
-The `.m4a` file must stay alongside the HTML file to play.
+```bash
+say -f "examples/My Deck-narration.txt"
+# optional voice/rate:
+say -v Samantha -r 175 -f "examples/My Deck-narration.txt"
+```
+
+List available voices: `say -v ?`
 
 ## Directory layout
 
