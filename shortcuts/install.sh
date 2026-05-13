@@ -18,6 +18,11 @@ set -euo pipefail
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 SERVICES_DIR="$HOME/Library/Services"
 
+# Remove any stale Rewrite: *.workflow entries before re-linking
+for stale in "$SERVICES_DIR"/Rewrite:\ *.workflow; do
+  [[ -e "$stale" || -L "$stale" ]] && rm -rf "$stale" && echo "Removed: $stale"
+done
+
 link_workflow() {
   local name="$1"
   local src="$SCRIPT_DIR/${name}.workflow"
