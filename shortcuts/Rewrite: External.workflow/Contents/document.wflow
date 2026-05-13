@@ -59,7 +59,7 @@
                 <key>ActionParameters</key>
                 <dict>
                     <key>COMMAND_STRING</key>
-                    <string>export PATH="/usr/local/bin:/opt/homebrew/bin:$PATH"
+                    <string>export PATH="/usr/local/bin:/opt/homebrew/bin:$HOME/.local/bin:$PATH"
 REAL=$(python3 -c "import os; print(os.path.realpath('$HOME/Library/Services/Rewrite: External.workflow'))")
 REPO_ROOT="$(dirname "$(dirname "$REAL")")"
 "$REPO_ROOT/bin/rewrite" external</string>
