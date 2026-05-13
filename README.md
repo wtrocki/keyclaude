@@ -1,6 +1,24 @@
 # aiskills
 
-A personal repository of Claude Code skills, agent profiles, MCP configurations, and growth documentation for an engineer at MongoDB.
+A personal AI operating layer for a Staff engineer — version-controlled skills, agent profiles, and keyboard shortcuts that reduce friction in writing and career tracking.
+
+## Why this exists
+
+Two problems eat engineer time quietly:
+
+**Writing.** Slack messages, PR replies, design doc comments, performance review bullets — you write a draft, it's rough, you spend five minutes fixing it or you send it rough. Neither is great. The shortcuts in this repo let you select any text, hit a key, and get a polished version in your clipboard in seconds — without leaving the app you're in.
+
+**Career tracking.** High-impact work is invisible if you don't capture it. A Slack thread where you unblocked three teams, an incident where your decision mattered, a review that changed the design — these events fade fast. The growth tools here turn raw input (paste a thread, paste a feedback note) into structured bragsheet rows and weekly signals automatically, so P&G and performance review prep become a rollup rather than an excavation.
+
+## What's here
+
+- **Mac shortcuts** — four Quick Actions (select text → refined version in clipboard) for internal writing, P&G bullets, public content, and PR replies
+- **Growth capture** — pipe any Slack thread or feedback note through Claude to extract career signals and append bragsheet rows
+- **Weekly notes** — templated weekly notes with automatic bragsheet signal extraction
+- **P&G sync** — synthesize weeks of notes into a self-reflection draft aligned to MongoDB Leadership Principles
+- **Review agent** — Staff-level framing for PR and design doc reviews
+
+Everything is a bash script or a markdown file. No framework, no dependencies beyond the `claude` CLI and standard macOS tools.
 
 ## Skills
 
