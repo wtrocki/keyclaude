@@ -47,6 +47,7 @@ Type `/slides <topic>` in Claude Code to generate a complete reveal.js presentat
 | Action | When | How |
 |--------|------|-----|
 | **Rewrite** | Before sending anything important | Select text → `⌃⌥R` (or copy → Raycast) |
+| **Growth capture** | After a 1:1, review, or notable discussion | Select text → `⌃⌥G` (or `pbpaste \| bin/growth-capture`) |
 | **Leadership feedback** | After a notable thread, review, or decision | `pbpaste \| bin/leadership-feedback` |
 | **Weekly** | Monday to create, Friday to review | `bin/weekly-init` / `bin/weekly-review` |
 
@@ -85,7 +86,8 @@ Skills are stateless — they transform input into structured output.
 |-------|-------------|
 | `rewrite-inline` | Rewrite text: `default` (internal comms), `leadership` (outcome-first), `external` (public-facing) |
 | `leadership-feedback` | Analyze a thread: signals present, signals missing, one concrete recommendation |
-| `weekly-review` | Synthesize a weekly note into four bullets: Focus, Cross-team Quality, Priority Shift, Priority Judgment |
+| `weekly-review` | Synthesize a weekly note into five bullets: Focus, Cross-team Quality, Priority Shift, Priority Judgment, Mentorship Signal |
+| `growth-capture` | Extract growth opportunities from any input (discussion, feedback, or development plan) — logs dated entries tied to leadership principles |
 | `slides` | Generate a reveal.js slide deck from a topic: `/slides <topic>` — outputs editable Markdown + standalone HTML |
 
 ## Agents
@@ -118,6 +120,8 @@ keyclaude/                    $GROWTH_REPO/
   bin/leadership-feedback ─reads──▶  (stdin)
                        ──writes──▶   leadership-log.md
   bin/rewrite          ──writes──▶   writing-insights.md
+  bin/growth-capture   ──reads ──▶   (stdin or file)
+                       ──writes──▶   growth-log.md
 ```
 
 ### Bin Scripts
@@ -126,8 +130,9 @@ keyclaude/                    $GROWTH_REPO/
 |--------|-------|
 | `bin/rewrite` | `echo "text" \| bin/rewrite [default\|leadership\|external]` |
 | `bin/leadership-feedback` | `pbpaste \| bin/leadership-feedback` |
+| `bin/growth-capture` | `pbpaste \| bin/growth-capture` or `bin/growth-capture /path/to/plan.md` |
 | `bin/weekly-init` | `bin/weekly-init [YYYY-WNN]` — create a new weekly note |
-| `bin/weekly-review` | `bin/weekly-review [YYYY-WNN]` — synthesize into four bullets |
+| `bin/weekly-review` | `bin/weekly-review [YYYY-WNN]` — synthesize into five bullets |
 
 ---
 

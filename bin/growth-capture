@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+# Usage: pbpaste | bin/growth-capture              — from clipboard (discussion, feedback)
+#        bin/growth-capture /path/to/plan.md       — from a file (e.g. a development plan)
+set -euo pipefail
+
+DATA_ROOT="${GROWTH_REPO:-$HOME/notes/data}"
+LOG_FILE="$DATA_ROOT/growth-log.md"
+
+if [[ $# -gt 0 ]]; then
+  INPUT=$(cat "$1")
+else
+  INPUT=$(cat)
+fi
+[[ -z "$INPUT" ]] && { echo "Error: no input text" >&2; exit 1; }
+
+RESULT=$(printf '%s' "$INPUT" | claude -p "/growth-capture")
+printf '%s' "$RESULT" | pbcopy
+
+mkdir -p "$DATA_ROOT"
+printf '\n---\n\n### %s\n\n%s\n' "$(date +"%Y-%m-%d %H:%M")" "$RESULT" >> "$LOG_FILE"
+
+afplay /System/Library/Sounds/Glass.aiff &
+osascript -e 'display notification "Growth opportunity captured to clipboard and log." with title "Growth Capture"' &

@@ -1,9 +1,9 @@
 ---
 name: weekly-review
-description: Synthesize a weekly note into four structured bullets — Focus Check, Cross-team Quality, Priority Shift, and Priority Judgment — for weekly self-reflection and 1:1 preparation.
+description: Synthesize a weekly note into five structured bullets — Focus Check, Cross-team Quality, Priority Shift, Priority Judgment, and Mentorship Signal — for weekly self-reflection and 1:1 preparation.
 ---
 
-Given a weekly note (a `weekly/YYYY-WNN.md` file or free-form weekly summary), produce exactly four labeled bullets in the format specified below. Output only the four bullets — no intro, no extra text, no explanation.
+Given a weekly note (a `weekly/YYYY-WNN.md` file or free-form weekly summary), produce exactly five labeled bullets in the format specified below. Output only the five bullets — no intro, no extra text, no explanation.
 
 **Focus Check**
 - One sentence: did the work this week align with the declared week priorities?
@@ -27,9 +27,16 @@ Given a weekly note (a `weekly/YYYY-WNN.md` file or free-form weekly summary), p
 - If all planned work appears on-scope, write: "All planned work aligns with stated priorities — no scope flag." Append `[no scope flag]`.
 - Otherwise append `[scope flag: <item name>]`.
 
+**Mentorship Signal**
+- One sentence: did any mentorship or coaching activity occur this week — planned or incidental?
+- Name the person(s) mentored if mentioned, and describe what was addressed (e.g., agenda-setting, scope clarification, technical approach, career growth).
+- Append exactly one tag inline: `[mentorship signal]` if a concrete interaction is evident; `[no mentorship signal]` if none is mentioned.
+- If a durable artifact resulted (note, doc, changed approach), name it.
+
 Output format (use this exact structure, no extra lines):
 
 **Focus Check:** <sentence> [DRIFT if applicable]
 **Cross-team Quality:** <sentence> [cross-team signal | no cross-team signal]
 **Priority Shift:** <sentence>
 **Priority Judgment:** <sentence> [scope flag: <item name> | no scope flag]
+**Mentorship Signal:** <sentence> [mentorship signal | no mentorship signal]

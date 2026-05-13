@@ -1,25 +1,25 @@
 #!/usr/bin/env bash
-# install.sh — symlink the Rewrite Quick Actions from this repo into ~/Library/Services/.
+# install.sh — symlink Quick Action workflows from this repo into ~/Library/Services/.
 #
 # Run once to install; the workflows in shortcuts/ are the source of truth.
 # Re-run to update after pulling changes.
 #
 # After installing:
 #   1. Select text in any app
-#   2. Right-click → Services → "Rewrite: Default / Leadership / External"
-#      (or use the keyboard shortcuts you assign below)
-#   3. Rewritten text lands in your clipboard; Glass sound plays
+#   2. Right-click → Services → choose a workflow
+#   3. Result lands in your clipboard; Glass sound plays
 #
 # Assign keyboard shortcuts:
 #   System Settings → Keyboard → Keyboard Shortcuts → Services → Text
-#   Suggested: ⌃⌥R = Default   ⌃⌥P = Leadership   ⌃⌥E = External
+#   Suggested: ⌃⌥R = Rewrite: Default   ⌃⌥P = Rewrite: Leadership   ⌃⌥E = Rewrite: External
+#              ⌃⌥G = Action: Capture
 set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 SERVICES_DIR="$HOME/Library/Services"
 
-# Remove any stale Rewrite: *.workflow entries before re-linking
-for stale in "$SERVICES_DIR"/Rewrite:\ *.workflow; do
+# Remove stale entries for known prefixes before re-linking
+for stale in "$SERVICES_DIR"/Rewrite:\ *.workflow "$SERVICES_DIR"/Action:\ *.workflow; do
   [[ -e "$stale" || -L "$stale" ]] && rm -rf "$stale" && echo "Removed: $stale"
 done
 
@@ -45,8 +45,10 @@ link_workflow() {
 link_workflow "Rewrite: Default"
 link_workflow "Rewrite: Leadership"
 link_workflow "Rewrite: External"
+link_workflow "Action: Capture"
 
 echo ""
 echo "Done. Shortcuts are installed but inert until you assign keys manually."
 echo "  System Settings → Keyboard → Keyboard Shortcuts → Services → Text"
-echo "  Suggested: ⌃⌥R = Default   ⌃⌥P = Leadership   ⌃⌥E = External"
+echo "  Suggested: ⌃⌥R = Rewrite: Default   ⌃⌥P = Rewrite: Leadership   ⌃⌥E = Rewrite: External"
+echo "             ⌃⌥G = Action: Capture"
