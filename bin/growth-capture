@@ -11,7 +11,7 @@ set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 REPO_ROOT="$(dirname "$SCRIPT_DIR")"
-DATA_ROOT="${GROWTH_REPO:-$REPO_ROOT/docs}"
+DATA_ROOT="${GROWTH_REPO:-$REPO_ROOT/../engineering-notes}"
 APPEND_FILE="${APPEND_FILE:-$DATA_ROOT/bragsheet.md}"
 OUTPUT_FILE=""
 

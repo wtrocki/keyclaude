@@ -9,7 +9,7 @@ set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 REPO_ROOT="$(dirname "$SCRIPT_DIR")"
-DATA_ROOT="${GROWTH_REPO:-$REPO_ROOT/docs}"
+DATA_ROOT="${GROWTH_REPO:-$REPO_ROOT/../engineering-notes}"
 BRAGSHEET="$DATA_ROOT/bragsheet.md"
 CYCLES_DIR="$DATA_ROOT/growth/cycles"
 OUTPUT_FILE=""
