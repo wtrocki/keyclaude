@@ -1,18 +1,18 @@
-# ClaudeSnip
+# KeyClaude
 
-**Engineering Personal Enterprise Assistant** — *Idea, In Progress*
+**Engineering Personal Assistant**
 
 A personal productivity layer for engineers that uses keyboard shortcuts to trigger Claude Code agents directly from the desktop. Agents perform scheduled tasks, weekly planning, and message rewriting — without breaking your flow.
 
 ---
 
-## Why ClaudeSnip
+## Why KeyClaude
 
 Engineers spend significant time on two things that shouldn't require much effort:
 
-**Writing.** Slack messages, PR replies, doc comments — you write a draft, it's rough, and you either spend five minutes polishing it or send it rough. ClaudeSnip lets you select any text, hit a key, and get a rewritten version in your clipboard in seconds, from any app.
+**Writing.** Slack messages, PR replies, doc comments — you write a draft, it's rough, and you either spend five minutes polishing it or send it rough. KeyClaude lets you select any text, hit a key, and get a rewritten version in your clipboard in seconds, from any app.
 
-**Context switching.** Fetching relevant data before replying, pulling up last week's notes before a meeting, surfacing what matters before a 1:1 — each lookup is a small tax that compounds. ClaudeSnip agents do the fetch automatically, injecting context before you act.
+**Context switching.** Fetching relevant data before replying, pulling up last week's notes before a meeting, surfacing what matters before a 1:1 — each lookup is a small tax that compounds. KeyClaude agents do the fetch automatically, injecting context before you act.
 
 ---
 
@@ -25,10 +25,10 @@ Keyboard shortcuts invoke agents to rewrite Slack messages with correct style an
 Agent skills are bound to system-level shortcuts for low-friction access from any app. Select text, hit the key, get the result. No alt-tabbing, no copy-paste workflow.
 
 ### Raycast Integration
-Extensions expose agent skills as Raycast actions, composable with existing Raycast workflows. Use ClaudeSnip skills anywhere Raycast is already in your muscle memory.
+Extensions expose agent skills as Raycast actions, composable with existing Raycast workflows. Use KeyClaude skills anywhere Raycast is already in your muscle memory.
 
 ### Context-Aware Enrichment
-Skills automatically fetch and inject relevant data from cloud.mongodb.com, MCP servers, and Glean before sending. Your messages arrive with the right context already attached.
+Skills can fetch and inject relevant data from MCP servers (Glean, GitHub, Slack, and others) before sending. Your messages arrive with the right context already attached.
 
 ### Scheduled Learning Sessions
 Agents deliver scheduled lessons based on user-triggered sessions — coaching that adapts to your cadence and what you're actually working on.
@@ -49,11 +49,13 @@ Agents deliver scheduled lessons based on user-triggered sessions — coaching t
 
 ```bash
 # 1. Clone
-git clone https://github.com/wtrocki/claudesnip.git
-cd claudesnip
+git clone https://github.com/wtrocki/keyclaude.git
+cd keyclaude
 
-# 2. Set your data repo path
-echo 'export GROWTH_REPO=~/Projects/engineering-notes/data' >> ~/.zshrc
+# 2. Create a data directory and point GROWTH_REPO at it
+mkdir -p ~/notes/data/weekly
+echo 'export GROWTH_REPO=~/notes/data' >> ~/.zshrc
+source ~/.zshrc
 
 # 3. Activate shortcuts — pick one:
 #    macOS Services
@@ -101,17 +103,18 @@ claude --profile .claude/profiles/leadership-agent.yaml
 
 ### Two-repo model
 
-`claudesnip` is the **engine**: skills, agents, bin scripts, and shortcuts. No personal data lives here.
+`keyclaude` is the **engine**: skills, agents, bin scripts, and shortcuts. No personal data lives here.
 
-Your `engineering-notes` repo is the **data layer**: weekly notes, leadership log, and work-specific context. The engine reads from it and writes back to it.
+Your data directory (`$GROWTH_REPO`) is the **data layer**: weekly notes, leadership log, and work-specific context. The engine reads from it and writes back to it.
 
 ```
-claudesnip/                        engineering-notes/data/
+keyclaude/                    $GROWTH_REPO/
   bin/weekly-init      ──writes──▶   weekly/YYYY-WNN.md
   bin/weekly-review    ──reads ──▶   weekly/YYYY-WNN.md
                        ──writes──▶   weekly/YYYY-WNN.md (## Weekly Review appended)
   bin/leadership-feedback ─reads──▶  (stdin)
                        ──writes──▶   leadership-log.md
+  bin/rewrite          ──writes──▶   writing-insights.md
 ```
 
 ### Bin Scripts
@@ -130,13 +133,8 @@ claudesnip/                        engineering-notes/data/
 This project is in active development. Planned work includes:
 
 - [ ] Scheduled agent sessions (lesson delivery, weekly prompts)
-- [ ] Deeper Glean and MCP integration for context enrichment
-- [ ] cloud.mongodb.com data injection for MongoDB-specific workflows
+- [ ] Deeper MCP integration for context enrichment (Glean, GitHub, Slack)
+- [ ] Custom data source injection for domain-specific workflows
 - [ ] Expanded Raycast extension surface
-- [ ] Open source release with general availability
 
-Contributions and feedback welcome once the project opens.
-
----
-
-*Will be open sourced and generally available.*
+Contributions and feedback welcome.
