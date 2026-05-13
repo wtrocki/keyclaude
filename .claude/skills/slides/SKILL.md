@@ -53,10 +53,30 @@ Or use the helper script (handles both formats):
 
 If pandoc is missing, tell the user to run: `brew install pandoc` (or `install.sh` in the project root).
 
-## Step 4 — Report
+## Step 4 — Ask about narration
+
+Before building, ask the user: "Should I also generate a narration script you can play with `say`?"
+
+If yes (or they already said `--narrate` / "with narration"):
+
+1. Read the markdown source you just wrote.
+2. For each slide (H1 title slide, then each `##` section), produce clean speakable text:
+   - Remove code fences and inline code
+   - Remove heading markers, bold/italic, bullet prefixes, HTML comments, image/link syntax
+   - Keep the natural sentence flow — rewrite fragments into full phrases if needed
+3. Write the result to `<output_dir>/<Topic>-narration.txt`, slides joined by ` [[slnc 1500]] `.
+4. Tell the user to run:
+   ```bash
+   say -f "<output_dir>/<Topic>-narration.txt"
+   # or with voice/rate:
+   say -v Samantha -r 175 -f "<output_dir>/<Topic>-narration.txt"
+   ```
+
+## Step 5 — Report
 
 Tell the user:
 - Markdown source path (edit this to update content)
 - Output path and how to open it
 - Exact pandoc command (or build.sh invocation) to rebuild after edits
+- If narration was generated: the narration file path and the `say` command to run it
 - For pptx: remind them that `slides/templates/reference.pptx` is the branding hook — replace it with a branded template to apply team styles

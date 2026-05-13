@@ -4,9 +4,6 @@
 # Usage:
 #   ./build.sh "examples/My Deck.md"          # → HTML (reveal.js)
 #   ./build.sh "examples/My Deck.md" --pptx   # → PowerPoint (.pptx)
-#
-# PPTX template: replace templates/reference.pptx with a branded file to apply
-# your team's theme (colors, fonts, logo). Pandoc uses it as a style reference.
 set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
@@ -55,8 +52,6 @@ else
     -V theme=black \
     --css "$CSS"
 
-  # Pandoc emits data-src for reveal.js lazy loading, but the lazy-load plugin
-  # isn't bundled — swap to plain src so images render without it.
   sed -i '' 's/data-src="/src="/g' "$OUTPUT"
 
   echo "Built: $OUTPUT"
