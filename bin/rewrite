@@ -31,7 +31,8 @@ $INPUT"
 fi
 
 cd "$REPO_ROOT"
-RESULT=$(printf '%s' "$PROMPT" | claude -p --skill rewrite-inline --tools "")
+SKILL_BODY=$(awk 'BEGIN{c=0} /^---$/{c++;next} c>=2{print}' "$REPO_ROOT/.claude/skills/rewrite-inline.md")
+RESULT=$(printf '%s' "$PROMPT" | claude -p --system-prompt "$SKILL_BODY" --tools "")
 printf '%s' "$RESULT" | pbcopy
 
 afplay /System/Library/Sounds/Glass.aiff &

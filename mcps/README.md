@@ -15,7 +15,7 @@ mcps/
 |------|---------|--------|
 | GitHub MCP | Interact with GitHub issues, PRs, and repos | Planned |
 | Slack MCP | Read Slack threads for use with `growth-notes` skill | Planned |
-| MongoDB Atlas MCP | Query Atlas clusters directly from Claude | Planned |
+| Atlas MCP | Query Atlas clusters directly from Claude | Planned |
 
 ## Adding a New MCP
 

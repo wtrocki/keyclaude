@@ -15,7 +15,7 @@ Two problems eat engineer time quietly:
 - **Mac shortcuts** — four Quick Actions via macOS Services or Raycast (copy text → refined version in clipboard) for internal writing, P&G bullets, public content, and PR replies
 - **Growth capture** — pipe any Slack thread or feedback note through Claude to extract career signals and append bragsheet rows
 - **Weekly notes** — templated weekly notes with automatic bragsheet signal extraction
-- **P&G sync** — synthesize weeks of notes into a self-reflection draft aligned to MongoDB Leadership Principles
+- **P&G sync** — synthesize weeks of notes into a self-reflection draft aligned to [Leadership Principles](https://www.mongodb.com/company/leadership-principles)
 - **Review agent** — Staff-level framing for PR and design doc reviews
 
 Everything is a bash script or a markdown file. No framework, no dependencies beyond the `claude` CLI and standard macOS tools.
@@ -123,11 +123,11 @@ Expected: leads with impact ("Reduced onboarding time…"), tags a Leadership Pr
 
 **Rewrite: External** `⌃⌥E`
 
-Use for: LinkedIn posts, blog drafts, conference CFPs — anything going outside MongoDB where internal names and Jira refs mean nothing.
+Use for: LinkedIn posts, blog drafts, conference CFPs — anything going outside your organization where internal names and ticket refs mean nothing.
 
 ```
-At MongoDB we used our internal Remote MCP gateway (tracked in CLOUDP-99812) to
-connect Claude Code to Atlas and internal tooling. The DX team and DevProd worked
+At our company we used our internal tool to
+connect Claude Code to internal tooling. The DX team and DevProd worked
 together to ship this as part of our AI developer experience initiative.
 ```
 
@@ -228,21 +228,21 @@ bin/review-agent --file docs/design.md --output-file review.md
    - **Raycast:** add `shortcuts/raycast/` as a Script Commands directory in Raycast Settings
 3. Run `bin/weekly-init` to create your first weekly note.
 
-### Separate data repo (optional)
+### Data repo (engineering-notes)
+
+Execution (skills, bin scripts, shortcuts) lives here. Personal notes and data live in a separate `engineering-notes` repo to keep private content out of this repo.
 
 All bin scripts read and write to `$GROWTH_REPO` when set, falling back to `docs/` inside this repo.
 
-To keep personal notes in a separate repository:
-
 ```bash
 # in your shell profile (~/.zshrc)
-export GROWTH_REPO=~/Projects/growth-notes/docs
+export GROWTH_REPO=~/Projects/engineering-notes/data
 ```
 
 Expected layout of the data repo:
 ```
-growth-notes/
-  docs/
+engineering-notes/
+  data/
     bragsheet.md
     weekly/
     growth/
@@ -252,3 +252,12 @@ growth-notes/
 ```
 
 No changes to any script needed — set the env var and the tools follow.
+
+---
+
+## Gaps / Known Missing
+
+| Gap | Notes |
+|-----|-------|
+| `bin/weekly-review` | Skill exists (`weekly-review`) but no bin wrapper. Should run the skill on a weekly note and print the 3-bullet summary (Focus Check, Cross-team Quality, Priority Shift). |
+| Code review profile | `bin/review-agent` sends PR review requests to `reviewer-agent`, which is built for reply polishing. A separate `code-review-agent` profile with Staff-level review framing would better serve that use case. |
