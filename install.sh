@@ -63,12 +63,12 @@ echo "==> Installing Claude Code skills"
 SKILLS_SRC="$REPO_DIR/.claude/skills"
 SKILLS_DST="$HOME/.claude/skills"
 mkdir -p "$SKILLS_DST"
-for src in "$SKILLS_SRC"/*.md; do
-  skill_name="$(basename "$src" .md)"
+for src in "$SKILLS_SRC"/*/; do
+  skill_name="$(basename "$src")"
   dst_dir="$SKILLS_DST/$skill_name"
   mkdir -p "$dst_dir"
-  cp "$src" "$dst_dir/SKILL.md"
-  echo "  ok  /$(basename "$src" .md)"
+  cp "$src/SKILL.md" "$dst_dir/SKILL.md"
+  echo "  ok  /$skill_name"
 done
 
 # ── 4. macOS Shortcuts (Rewrite Quick Actions) ────────────────────────────────
