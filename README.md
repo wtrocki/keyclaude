@@ -1,5 +1,7 @@
 # KeyClaude
 
+![KeyClaude Logo](slides/examples/data/logo.png)
+
 **Engineering Personal Assistant**
 
 A personal productivity layer for engineers that uses keyboard shortcuts to trigger Claude Code agents directly from the desktop. Agents perform scheduled tasks, weekly planning, and message rewriting — without breaking your flow.
@@ -32,6 +34,9 @@ Skills can fetch and inject relevant data from MCP servers (Glean, GitHub, Slack
 
 ### Scheduled Learning Sessions
 Agents deliver scheduled lessons based on user-triggered sessions — coaching that adapts to your cadence and what you're actually working on.
+
+### Slide Deck Creator
+Type `/slides <topic>` in Claude Code to generate a complete reveal.js presentation. The skill writes a Markdown source file and builds a standalone HTML deck via pandoc. Includes a MongoDB-branded CSS theme; works with any reveal.js theme. Edit the Markdown and rebuild with the printed pandoc command.
 
 ---
 
@@ -86,6 +91,7 @@ Skills are stateless — they transform input into structured output.
 | `rewrite-inline` | Rewrite text: `default` (internal comms), `leadership` (outcome-first), `external` (public-facing) |
 | `leadership-feedback` | Analyze a thread: signals present, signals missing, one concrete recommendation |
 | `weekly-review` | Synthesize a weekly note into four bullets: Focus, Cross-team Quality, Priority Shift, Priority Judgment |
+| `slides` | Generate a reveal.js slide deck from a topic: `/slides <topic>` — outputs editable Markdown + standalone HTML |
 
 ## Agents
 
