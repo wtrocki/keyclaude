@@ -1,0 +1,36 @@
+{
+  "hooks": {
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "say -v Samantha \"Done. ${PWD##*/}\""
+          }
+        ]
+      }
+    ],
+    "PermissionRequest": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "say -v Daniel \"${PWD##*/} needs your permission\"",
+            "async": true
+          }
+        ]
+      }
+    ],
+    "Elicitation": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "say -v Ava \"${PWD##*/} has a question\"",
+            "async": true
+          }
+        ]
+      }
+    ]
+  }
+}
