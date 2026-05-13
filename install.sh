@@ -64,6 +64,7 @@ SKILLS_SRC="$REPO_DIR/.claude/skills"
 SKILLS_DST="$HOME/.claude/skills"
 mkdir -p "$SKILLS_DST"
 for src in "$SKILLS_SRC"/*/; do
+  [[ -f "$src/SKILL.md" ]] || continue
   skill_name="$(basename "$src")"
   dst_dir="$SKILLS_DST/$skill_name"
   mkdir -p "$dst_dir"
