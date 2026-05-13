@@ -4,38 +4,33 @@
 
 **Engineering Personal Assistant**
 
-## The Problem: Writing
+## ✍️ The Problem
 
-Engineers write dozens of messages a day.
+Engineers write **dozens of messages a day.**
 
-- Slack messages, PR comments, doc updates, status notes
-- You write a draft — it's rough
-- You either **spend 5 minutes polishing** or **send it rough**
-- Neither is good. Both waste time.
+- 💬 Slack · PR comments · doc updates · status notes
+- 📤 Send it rough → it reflects poorly
+- ⏱️ Polish it manually → lose focus
 
-## The Problem: Context Switching
+**Either way, something suffers.**
 
-Every lookup before replying is a small tax.
+## 🔀 Context Switching Tax
 
-- Pull up last week's notes before a 1:1
-- Fetch relevant data before answering a thread
-- Surface what matters before a decision
-- Each lookup interrupts flow — and they **compound**
+Every lookup before replying is friction.
 
-## The Problem: AI is Right There, But...
+- 📋 Pull up notes → answer a thread
+- 📊 Fetch data → make a decision
+- 🧭 Surface context → join a 1:1
 
-AI tools exist. The friction is the workflow.
+Small interruptions **compound into lost hours.**
 
-- Open a new tab → paste text → copy result back
-- Switch apps, break focus, lose context
-- No integration with your actual writing surface
-- Works for one-off tasks, not for dozens of micro-writes a day
-
-## Sound Familiar?
+## 🤖 AI Is Right There, But…
 
 ![](data/GAP.jpeg){width=80%}
 
-## What KeyClaude Does
+Open tab → paste → copy back → switch app → lose context
+
+## ⚡ What KeyClaude Does
 
 **Invoke AI from any app. Without leaving it.**
 
@@ -43,67 +38,38 @@ AI tools exist. The friction is the workflow.
 Select text  →  hit a key  →  rewritten text in clipboard
 ```
 
-- Bound to system-wide macOS shortcuts
-- Works in Slack, email, docs, terminal — anywhere
-- Result in clipboard before you notice you pressed the key
+- 🖥️ System-wide macOS shortcuts
+- 🌐 Works in Slack, email, docs, terminal — **anywhere**
+- ⚡ Result lands before you lose focus
 
-## Demo 1: Rewrite a Message
+## 🎬 Demo 1: Rewrite a Message
 
-Three modes, one shortcut family:
+Select any text → hit shortcut → text is rewritten **in place**
 
 | Shortcut | Mode | Best for |
 |----------|------|---------|
 | `⌃⌥R` | Default | Slack, email, PR comments |
-| `⌃⌥P` | Leadership | Status updates, staff reviews |
-| `⌃⌥E` | External | Blog posts, LinkedIn, conference |
+| `⌃⌥P` | Leadership | Outcome-first · status updates |
+| `⌃⌥E` | External | Blog posts · LinkedIn · conference |
 
-Select text → hit shortcut → Glass sound → paste
+> Glass sound → paste → done ✅
 
-## What Leadership Mode Actually Does
+## 🎬 Demo 2: Writing Insights
 
-Transforms activity-framing into outcome-framing:
-
-> *"I worked on the runbook and updated the deployment steps"*
-
-becomes:
-
-> *"Reduced launch risk by standardising the deployment runbook (communicates with clarity)*
-> *[NEEDS EVIDENCE for adoption claim]"*
-
-Flags missing evidence. Tags leadership behaviors inline.
-
-## Demo 2: Writing Insights
-
-Every rewrite also coaches you — silently, in the background.
+Every rewrite coaches you — silently, in the background.
 
 ```
 bin/rewrite runs  →  result to clipboard
                   →  2–3 writing patterns logged to writing-insights.md
 ```
 
-Not "here's what changed." But: **"here's a habit you repeat that weakens your writing."**
+Not *"here's what changed"* — but: **"here's a habit that consistently weakens your writing."**
 
-Patterns accumulate. You improve over weeks, not just in this message.
+📈 Patterns accumulate. You improve over weeks, not just in this message.
 
-## Demo 2: Leadership Feedback
+## 🎬 Demo 3: Weekly Review
 
-Analyze any Slack thread or message:
-
-```bash
-pbpaste | bin/leadership-feedback
-```
-
-Returns in seconds:
-
-- **Signals Present** — leadership behaviors already visible, with evidence
-- **Signals Missing** — what framing was absent, and why it mattered
-- **Follow-up** — one concrete recommendation for what to say or do next
-
-Result lands in clipboard + appended to `leadership-log.md`.
-
-## Demo 2: Weekly Review
-
-Cap the week in one command:
+Close the week in one command:
 
 ```bash
 bin/weekly-init    # Monday: create structured note
@@ -112,31 +78,18 @@ bin/weekly-review  # Friday: synthesize into 4 bullets
 
 **Focus Check** · **Cross-team Quality** · **Priority Shift** · **Priority Judgment**
 
-Appended back to the weekly note. No separate tool. No extra tab.
+🗓️ No separate tool. No extra tab.
 
-## What You Get
+## 📊 What You Get
 
 | Without KeyClaude | With KeyClaude |
 |-------------------|----------------|
-| Rough messages sent | Polished in seconds |
-| 5 min manual editing | Shortcut + paste |
-| No feedback on writing | Habits logged per rewrite |
-| Thread analysis = manual | `pbpaste \| bin/leadership-feedback` |
-| Weekly review = skipped | 4 bullets in one command |
+| 😬 Rough messages sent | ✅ Polished in seconds |
+| ⏳ 5 min manual editing | ⚡ Shortcut + paste |
+| 🔇 No feedback on writing | 📝 Habits logged per rewrite |
+| ❌ Weekly review = skipped | 🎯 4 bullets in one command |
 
-## How It Works
-
-```
-keyclaude/  (engine)        $GROWTH_REPO/  (your data)
-  bin/rewrite       ──▶   writing-insights.md
-  bin/weekly-*      ──▶   weekly/YYYY-WNN.md
-  bin/leadership    ──▶   leadership-log.md
-```
-
-- Engine: skills, shortcuts, agents — no personal data, open source
-- Data: your notes, logs, context — stays local, out of version control
-
-## Install
+## 📦 Install
 
 ```bash
 git clone https://github.com/wtrocki/keyclaude
@@ -144,15 +97,11 @@ cd keyclaude
 ./install.sh
 ```
 
-Assign keys: **System Settings → Keyboard → Shortcuts → Services → Text**
+- ⌨️ Assign keys: **System Settings → Keyboard → Shortcuts → Services → Text**
+- 🚀 Or add `shortcuts/raycast/` as Script Commands in Raycast
 
-Or add `shortcuts/raycast/` as a Script Commands directory in Raycast.
+## 🔗 Everything Else Is at the Repo
 
-## What's Next
+**[github.com/wtrocki/keyclaude](https://github.com/wtrocki/keyclaude)**
 
-- Scheduled agent sessions — coaching on your cadence
-- MCP context injection — Glean, GitHub, Slack data before you act
-- Custom data sources per project
-- Expanded Raycast surface
-
-## Questions?
+🗺️ Roadmap · 📖 Install guide · ⌨️ Shortcuts · all the details

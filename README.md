@@ -59,16 +59,11 @@ NOTE: Lefership feedback and Weekly are advanced features.
 git clone https://github.com/wtrocki/keyclaude.git
 cd keyclaude
 
-# 2. Create a data directory and point GROWTH_REPO at it
-mkdir -p ~/notes/data/weekly
-echo 'export GROWTH_REPO=~/notes/data' >> ~/.zshrc
-source ~/.zshrc
+# 2. Run the installer (installs pandoc, sets up GROWTH_REPO, installs macOS shortcuts)
+./install.sh
 
 # 3. Activate shortcuts — pick one:
-#    macOS Services
-shortcuts/install.sh
-#    then: System Settings → Keyboard → Shortcuts → Services → Text → assign keys
-
+#    macOS Services: assign keys in System Settings → Keyboard → Shortcuts → Services → Text
 #    Raycast: add shortcuts/raycast/ as a Script Commands directory in Raycast Settings
 ```
 
