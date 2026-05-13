@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # rewrite — pipe selected text through the rewrite-inline skill, copy result to clipboard.
-# Also logs writing improvement hints to $GROWTH_REPO/data/writing-insights.md in the background.
+# Also logs writing improvement hints to $GROWTH_REPO/writing-insights.md in the background.
 #
 # Usage:
 #   echo "draft text" | bin/rewrite [mode]
@@ -13,8 +13,8 @@ export LC_ALL=en_US.UTF-8
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 REPO_ROOT="$(dirname "$SCRIPT_DIR")"
-DATA_ROOT="${GROWTH_REPO:-$REPO_ROOT/../engineering-notes}"
-LOG_FILE="$DATA_ROOT/data/writing-insights.md"
+DATA_ROOT="${GROWTH_REPO:-$REPO_ROOT/../engineering-notes/data}"
+LOG_FILE="$DATA_ROOT/writing-insights.md"
 MODE="${1:-default}"
 
 INPUT=$(cat)

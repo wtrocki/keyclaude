@@ -18,10 +18,10 @@ General-purpose rewrite for internal communication (Slack, email, docs).
 - Return only the rewritten text — no intro, no bullets, no explanation.
 
 `[mode: leadership]`
-Leadership-aligned rewrite. Activates evidence-aware, outcome-first output aligned to Staff engineering and Leadership Principles.
+Leadership-aligned rewrite. Activates evidence-aware, outcome-first output for staff engineering and leadership communication.
 - Lead each paragraph or bullet with the outcome, not the activity. ("Reduced launch risk…" not "I worked on the runbook…")
 - Where the original text makes a claim about impact or adoption, preserve any cited evidence. If a claim lacks a link or citable artifact, append `[NEEDS EVIDENCE]` inline — do not invent evidence.
-- When the text describes a behavior that maps to a Leadership Principle, surface the principle name in parentheses at the end of the sentence. Example: "(Leaders communicate with clarity)"
+- When the text describes a notable leadership behavior (clarity, cross-team enablement, influencing without authority, surfacing risk), surface the behavior name in parentheses at the end of the sentence. Example: "(communicates with clarity)"
 - Rewrite for a senior engineer audience: emphasize cross-team enablement, organizational influence, and durable outcomes over individual task completion.
 - Do not change the substance or add new claims. Return only the rewritten text.
 

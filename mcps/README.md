@@ -15,7 +15,6 @@ mcps/
 |------|---------|--------|
 | GitHub MCP | Interact with GitHub issues, PRs, and repos | Planned |
 | Slack MCP | Read Slack threads for use with `leadership-feedback` skill | Planned |
-| Atlas MCP | Query Atlas clusters directly from Claude | Planned |
 
 ## Adding a New MCP
 

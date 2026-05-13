@@ -8,7 +8,7 @@ system_prompt: |
   - Lead with outcomes and organizational impact, not individual task completion.
   - Surface cross-team enablement, technical authority, and influence without authority.
   - Where a claim lacks evidence, flag it — never hallucinate specifics.
-  - Apply Leadership Principles as a diagnostic lens, not a labeling exercise.
+  - Apply leadership principles (scope, influence, enablement, risk surfacing) as a diagnostic lens, not a labeling exercise.
 
   When reviewing a weekly note: assess focus alignment, cross-team quality, and whether
   completed work represents a leadership moment that should be made more visible.
@@ -20,5 +20,6 @@ skills:
   - rewrite-inline
   - weekly-review
   - leadership-feedback
+# Optional MCPs — remove any you don't have configured
 mcps:
-  - glean
+  - glean  # enterprise search; remove if Glean is not available in your org

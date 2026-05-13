@@ -25,7 +25,7 @@
   },
   "usage_notes": [
     "Prefer search + read_document over chat for growth capture — you want specific artifacts, not synthesis.",
-    "Use chat when writing P&G reflections that need to reason across multiple sources.",
+    "Use chat when writing reflections that need to reason across multiple sources.",
     "Search results are permission-filtered — you will only see content you have access to."
   ]
 }
