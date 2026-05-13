@@ -9,7 +9,7 @@
 Engineers write **dozens of messages a day.**
 
 - 💬 Slack · PR comments · doc updates · status notes
-- 📤 Send it rough → it reflects poorly
+- 📤 Send it unpolished → it reflects poorly
 - ⏱️ Polish it manually → lose focus
 
 **Either way, something suffers.**
@@ -88,17 +88,6 @@ bin/weekly-review  # Friday: synthesize into 4 bullets
 | ⏳ 5 min manual editing | ⚡ Shortcut + paste |
 | 🔇 No feedback on writing | 📝 Habits logged per rewrite |
 | ❌ Weekly review = skipped | 🎯 4 bullets in one command |
-
-## 📦 Install
-
-```bash
-git clone https://github.com/wtrocki/keyclaude
-cd keyclaude
-./install.sh
-```
-
-- ⌨️ Assign keys: **System Settings → Keyboard → Shortcuts → Services → Text**
-- 🚀 Or add `shortcuts/raycast/` as Script Commands in Raycast
 
 ## 🔗 Everything Else Is at the Repo
 

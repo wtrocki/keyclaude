@@ -97,7 +97,7 @@
     code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
   </style>
   <link rel="stylesheet" href="https://unpkg.com/reveal.js@^5/dist/theme/black.css" id="theme">
-  <link rel="stylesheet" href="/Users/w.trocki/Projects/keyclaude/slides/templates/mongodb-revealjs.css"/>
+  <link rel="stylesheet" href="../templates/mongodb-revealjs.css"/>
 </head>
 <body>
   <div class="reveal">
@@ -107,7 +107,7 @@
 <section>
 <section id="keyclaude" class="title-slide slide level1">
 <h1>KeyClaude</h1>
-<p><img data-src="data/logo.png" width="320" /></p>
+<p><img src="data/logo.png" width="320" /></p>
 <p><strong>Engineering Personal Assistant</strong></p>
 </section>
 <section id="the-problem" class="slide level2">
@@ -115,7 +115,7 @@
 <p>Engineers write <strong>dozens of messages a day.</strong></p>
 <ul>
 <li>💬 Slack · PR comments · doc updates · status notes</li>
-<li>📤 Send it rough → it reflects poorly</li>
+<li>📤 Send it unpolished → it reflects poorly</li>
 <li>⏱️ Polish it manually → lose focus</li>
 </ul>
 <p><strong>Either way, something suffers.</strong></p>
@@ -132,7 +132,7 @@
 </section>
 <section id="ai-is-right-there-but" class="slide level2">
 <h2>🤖 AI Is Right There, But…</h2>
-<p><img data-src="data/GAP.jpeg" style="width:80.0%" /></p>
+<p><img src="data/GAP.jpeg" style="width:80.0%" /></p>
 <p>Open tab → paste → copy back → switch app → lose context</p>
 </section>
 <section id="what-keyclaude-does" class="slide level2">
@@ -228,19 +228,6 @@ class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="
 </tr>
 </tbody>
 </table>
-</section>
-<section id="install" class="slide level2">
-<h2>📦 Install</h2>
-<div class="sourceCode" id="cb4"><pre
-class="sourceCode bash"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> clone https://github.com/wtrocki/keyclaude</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> keyclaude</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="ex">./install.sh</span></span></code></pre></div>
-<ul>
-<li>⌨️ Assign keys: <strong>System Settings → Keyboard → Shortcuts →
-Services → Text</strong></li>
-<li>🚀 Or add <code>shortcuts/raycast/</code> as Script Commands in
-Raycast</li>
-</ul>
 </section>
 <section id="everything-else-is-at-the-repo" class="slide level2">
 <h2>🔗 Everything Else Is at the Repo</h2>

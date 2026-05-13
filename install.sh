@@ -56,13 +56,28 @@ else
   mkdir -p "$GROWTH_REPO/weekly"
 fi
 
-# ── 3. macOS Shortcuts (Rewrite Quick Actions) ────────────────────────────────
+# ── 3. Claude Code skills ─────────────────────────────────────────────────────
+
+echo ""
+echo "==> Installing Claude Code skills"
+SKILLS_SRC="$REPO_DIR/.claude/skills"
+SKILLS_DST="$HOME/.claude/skills"
+mkdir -p "$SKILLS_DST"
+for src in "$SKILLS_SRC"/*.md; do
+  skill_name="$(basename "$src" .md)"
+  dst_dir="$SKILLS_DST/$skill_name"
+  mkdir -p "$dst_dir"
+  cp "$src" "$dst_dir/SKILL.md"
+  echo "  ok  /$(basename "$src" .md)"
+done
+
+# ── 4. macOS Shortcuts (Rewrite Quick Actions) ────────────────────────────────
 
 echo ""
 echo "==> Installing macOS Service shortcuts"
 "$REPO_DIR/shortcuts/install.sh"
 
-# ── 4. Done ───────────────────────────────────────────────────────────────────
+# ── 5. Done ───────────────────────────────────────────────────────────────────
 
 echo ""
 echo "Done."

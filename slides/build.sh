@@ -18,7 +18,8 @@ fi
 
 INPUT="$1"
 OUTPUT="${INPUT%.md}.html"
-CSS="$SCRIPT_DIR/templates/mongodb-revealjs.css"
+# Path relative to the output file so browsers resolve it correctly
+CSS="../templates/mongodb-revealjs.css"
 
 if ! command -v pandoc &>/dev/null; then
   echo "pandoc not found. Run: brew install pandoc  (or ./install.sh)"
@@ -31,5 +32,9 @@ pandoc "$INPUT" \
   --slide-level=2 \
   -V theme=black \
   --css "$CSS"
+
+# Pandoc emits data-src for reveal.js lazy loading, but the lazy-load plugin
+# isn't bundled — swap to plain src so images render without it.
+sed -i '' 's/data-src="/src="/g' "$OUTPUT"
 
 echo "Built: $OUTPUT"
