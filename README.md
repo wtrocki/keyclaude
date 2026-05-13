@@ -133,26 +133,6 @@ experience initiative.
 
 Expected: internal team names dropped or replaced, internal tool names explained briefly for an external audience.
 
----
-
-**Rewrite: Reply** `⌃⌥Y`
-
-Use for: your draft reply in a GitHub PR thread or design review.
-
-```
-[Thread context]
-Why are we scanning the full collection here instead of using an index? This will
-degrade badly at scale.
-
-[Your draft reply]
-yeah thats a fair point, we do have an index on that field but its not being used
-because of the query shape. i can add a hint or restructure the query, not sure
-which is better, probably the hint is easier but restructuring would be cleaner
-long term. will take a look
-```
-
-Expected: only your reply comes back, tightened — thread context is used for understanding but not included in output.
-
 ### Troubleshooting
 
 | Symptom | Fix |
@@ -171,7 +151,6 @@ Raycast Script Commands read from clipboard rather than selected text. Copy the 
 | Command | Key | Script |
 |---------|-----|--------|
 | Rewrite: Default | `⌃⌥R` | `rewrite-default.sh` |
-| Rewrite: Reply | `⌃⌥Y` | `rewrite-reply.sh` |
 | Rewrite: Leadership | `⌃⌥P` | `rewrite-leadership.sh` |
 | Rewrite: External | `⌃⌥E` | `rewrite-external.sh` |
 
