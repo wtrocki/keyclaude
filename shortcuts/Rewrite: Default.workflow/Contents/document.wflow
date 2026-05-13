@@ -67,7 +67,7 @@ REPO_ROOT="$(dirname "$(dirname "$REAL")")"
                     <key>CheckedForUserDefaultShell</key>
                     <true/>
                     <key>inputMethod</key>
-                    <integer>1</integer>
+                    <integer>0</integer>
                     <key>shell</key>
                     <string>/bin/bash</string>
                     <key>source</key>
