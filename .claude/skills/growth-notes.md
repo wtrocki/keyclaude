@@ -14,12 +14,12 @@ Output all six sections below in order:
 
 2) Strengths (bulleted list)
 - List concrete strengths demonstrated in the thread.
-- For each bullet, explicitly reference at least one MongoDB Leadership Principle by name (e.g., "Leaders act like owners," "Leaders communicate with clarity," "Leaders focus on outcomes," "Leaders never stop learning and growing," "Leaders build extraordinary teams").
+- For each bullet, explicitly reference at least one Leadership Principle by name (e.g., "Leaders act like owners," "Leaders communicate with clarity," "Leaders focus on outcomes," "Leaders never stop learning and growing," "Leaders build extraordinary teams").
 - Tag any strength that involved cross-team impact with [cross-team], technical authority with [tech-authority], mentorship with [mentorship], operational excellence with [ops-excellence], or external storytelling with [external].
 
 3) Growth opportunities (bulleted list)
 - List specific, behavioral growth opportunities grounded in signals from the thread.
-- Tie each item to one or more MongoDB Leadership Principles where relevant.
+- Tie each item to one or more Leadership Principles where relevant.
 - Be specific about the gap: distinguish between "did not do X" vs. "did X but without Y artifact or evidence."
 
 4) Next cycle focus (3–5 bullets)

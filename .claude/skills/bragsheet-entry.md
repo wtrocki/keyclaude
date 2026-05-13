@@ -19,7 +19,7 @@ signal and produce exactly one of the two outputs below.
   people beyond your immediate assignment.
 - Operational excellence at scale: you created a runbook, guideline, or recovery pattern
   that is now reusable and referenced by others.
-- External storytelling: you published, presented, or represented MongoDB publicly in
+- External storytelling: you published, presented, or represented your organization publicly in
   a way that builds technical credibility (conference, blog, RFC, community).
 - Mentorship with outcome: a mentee made a better decision or grew visibly because of
   your direct coaching — and you can describe the outcome.
@@ -42,7 +42,7 @@ Field rules:
   as a placeholder.
 - `<type>`: Exactly one of: `cross-team` | `tech-authority` | `ops-excellence` |
   `external` | `mentorship`
-- `<Leadership Principle>`: Exactly one of MongoDB's five principles, by name:
+- `<Leadership Principle>`: Exactly one of the five Leadership Principles, by name:
   `Act Like Owners` | `Communicate with Clarity` | `Focus on Outcomes` |
   `Never Stop Learning` | `Build Extraordinary Teams`
 - `<impact sentence>`: One sentence, 20 words max. Structure:
