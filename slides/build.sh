@@ -1,40 +1,63 @@
 #!/usr/bin/env bash
-# build.sh — convert a Markdown source in examples/ to a reveal.js HTML slide deck.
+# build.sh — convert a Markdown source to a reveal.js HTML deck or a .pptx file.
 #
 # Usage:
-#   ./build.sh "examples/My Deck.md"
+#   ./build.sh "examples/My Deck.md"          # → HTML (reveal.js)
+#   ./build.sh "examples/My Deck.md" --pptx   # → PowerPoint (.pptx)
 #
-# Output: examples/My Deck.html  (same name, .html extension)
-# Theme:  templates/mongodb-revealjs.css on top of reveal.js "black" base
+# PPTX template: replace templates/reference.pptx with a branded file to apply
+# your team's theme (colors, fonts, logo). Pandoc uses it as a style reference.
 set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 if [[ $# -eq 0 ]]; then
-  echo "Usage: $0 <path-to-markdown>"
-  echo "  e.g. $0 'examples/KeyClaude - Project Demo.md'"
+  echo "Usage: $0 <path-to-markdown> [--pptx]"
+  echo "  e.g. $0 'examples/KeyClaude.md'"
+  echo "       $0 'examples/KeyClaude.md' --pptx"
   exit 1
 fi
 
 INPUT="$1"
-OUTPUT="${INPUT%.md}.html"
-# Path relative to the output file so browsers resolve it correctly
-CSS="../templates/mongodb-revealjs.css"
+FORMAT="${2:-}"
 
 if ! command -v pandoc &>/dev/null; then
   echo "pandoc not found. Run: brew install pandoc  (or ./install.sh)"
   exit 1
 fi
 
-pandoc "$INPUT" \
-  -t revealjs -s \
-  -o "$OUTPUT" \
-  --slide-level=2 \
-  -V theme=black \
-  --css "$CSS"
+if [[ "$FORMAT" == "--pptx" ]]; then
+  OUTPUT="${INPUT%.md}.pptx"
+  REFERENCE="$SCRIPT_DIR/templates/reference.pptx"
+  RESOURCE_PATH="$(dirname "$INPUT")"
 
-# Pandoc emits data-src for reveal.js lazy loading, but the lazy-load plugin
-# isn't bundled — swap to plain src so images render without it.
-sed -i '' 's/data-src="/src="/g' "$OUTPUT"
+  REFERENCE_ARG=()
+  if [[ -f "$REFERENCE" ]]; then
+    REFERENCE_ARG=(--reference-doc="$REFERENCE")
+  fi
 
-echo "Built: $OUTPUT"
+  pandoc "$INPUT" \
+    -t pptx \
+    -o "$OUTPUT" \
+    --slide-level=2 \
+    --resource-path="$RESOURCE_PATH" \
+    "${REFERENCE_ARG[@]}"
+
+  echo "Built: $OUTPUT"
+else
+  OUTPUT="${INPUT%.md}.html"
+  CSS="../templates/mongodb-revealjs.css"
+
+  pandoc "$INPUT" \
+    -t revealjs -s \
+    -o "$OUTPUT" \
+    --slide-level=2 \
+    -V theme=black \
+    --css "$CSS"
+
+  # Pandoc emits data-src for reveal.js lazy loading, but the lazy-load plugin
+  # isn't bundled — swap to plain src so images render without it.
+  sed -i '' 's/data-src="/src="/g' "$OUTPUT"
+
+  echo "Built: $OUTPUT"
+fi
