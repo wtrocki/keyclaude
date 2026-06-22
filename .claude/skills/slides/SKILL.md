@@ -1,6 +1,7 @@
 ---
 name: slides
 description: Generate a reveal.js slide deck or PowerPoint (.pptx) from a topic description. Creates a markdown source file and builds HTML or PPTX output using pandoc.
+disable-model-invocation: true
 ---
 
 You are generating a presentation. Follow these steps in order.

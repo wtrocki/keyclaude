@@ -33,12 +33,15 @@ install_if_missing() {
 echo "==> Checking required tools"
 require_brew
 install_if_missing pandoc        # slides: markdown → reveal.js HTML
-install_if_missing claude        # claude-code: AI agent CLI (tap: anthropics/claude-code)
-
-# claude-code is distributed as an npm package; try npm path if brew misses it
-if ! check claude; then
-  echo "  installing claude via npm..."
-  npm install -g @anthropic-ai/claude-code
+# Prefer opencode; fall back to Claude Code (most users will have claude)
+if check opencode; then
+  echo "  ok  opencode"
+elif check claude; then
+  echo "  ok  claude"
+else
+  echo "  No AI CLI found. Install opencode or claude manually."
+  echo "  - opencode: brew install opencode"
+  echo "  - claude:   brew install claude"
 fi
 
 # ── 2. GROWTH_REPO data directory ─────────────────────────────────────────────
@@ -56,21 +59,27 @@ else
   mkdir -p "$GROWTH_REPO/weekly"
 fi
 
-# ── 3. Claude Code skills ─────────────────────────────────────────────────────
+# ── 3. AI agent skills ───────────────────────────────────────────────────────
 
 echo ""
-echo "==> Installing Claude Code skills"
+echo "==> Installing AI agent skills"
 SKILLS_SRC="$REPO_DIR/.claude/skills"
-SKILLS_DST="$HOME/.claude/skills"
-mkdir -p "$SKILLS_DST"
-for src in "$SKILLS_SRC"/*/; do
-  [[ -f "$src/SKILL.md" ]] || continue
-  skill_name="$(basename "$src")"
-  dst_dir="$SKILLS_DST/$skill_name"
-  mkdir -p "$dst_dir"
-  cp "$src/SKILL.md" "$dst_dir/SKILL.md"
-  echo "  ok  /$skill_name"
-done
+
+install_skills() {
+  local dst="$1"
+  mkdir -p "$dst"
+  for src in "$SKILLS_SRC"/*/; do
+    [[ -f "$src/SKILL.md" ]] || continue
+    skill_name="$(basename "$src")"
+    dst_dir="$dst/$skill_name"
+    mkdir -p "$dst_dir"
+    cp "$src/SKILL.md" "$dst_dir/SKILL.md"
+    echo "  ok  $dst/$skill_name"
+  done
+}
+
+install_skills "$HOME/.opencode/skills"
+install_skills "$HOME/.claude/skills"
 
 # ── 4. macOS Shortcuts (Rewrite Quick Actions) ────────────────────────────────
 
@@ -90,4 +99,4 @@ echo "     Suggested: ⌃⌥R = Rewrite: Default   ⌃⌥P = Leadership   ⌃⌥
 echo ""
 echo "  2. Try it: select any text → hit ⌃⌥R"
 echo ""
-echo "  3. Use /slides in Claude Code to generate a new slide deck"
+echo "  3. Use /slides in your AI CLI to generate a new slide deck"

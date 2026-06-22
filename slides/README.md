@@ -14,7 +14,7 @@ Slide decks built from Markdown via pandoc.
 
 ## Narration
 
-Use `/slides` in Claude Code — it will ask if you want a narration script and generate `<deck>-narration.txt` for you. Then run:
+Use `/slides` in your AI CLI — it will ask if you want a narration script and generate `<deck>-narration.txt` for you. Then run:
 
 ```bash
 say -f "examples/My Deck-narration.txt"
@@ -49,4 +49,4 @@ Replace `templates/reference.pptx` with a branded file (your team's colors, font
 
 ## Skill
 
-Use `/slides <topic>` in Claude Code to generate a new deck end-to-end.
+Use `/slides <topic>` in your AI CLI to generate a new deck end-to-end.

@@ -2,6 +2,9 @@
 # Usage: bin/weekly-review [YYYY-WNN]
 set -euo pipefail
 
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+source "$SCRIPT_DIR/lib.sh"
+
 DATA_ROOT="${GROWTH_REPO:-$HOME/notes/data}"
 WEEKLY_DIR="$DATA_ROOT/weekly"
 WEEK="${1:-$(date +"%Y-W%V")}"
@@ -9,7 +12,7 @@ FILE="$WEEKLY_DIR/${WEEK}.md"
 
 [[ ! -f "$FILE" ]] && { echo "Error: weekly note not found: $FILE" >&2; echo "Run 'bin/weekly-init ${WEEK}' to create it." >&2; exit 1; }
 
-SYNTHESIS=$(claude -p "/weekly-review" < "$FILE")
+SYNTHESIS=$(ai "/weekly-review" < "$FILE")
 printf '%s\n' "$SYNTHESIS"
 
 if ! grep -q "^## Weekly Review" "$FILE"; then

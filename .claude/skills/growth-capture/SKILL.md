@@ -1,6 +1,7 @@
 ---
 name: growth-capture
 description: Extract personal growth opportunities from any input — a discussion, feedback, or a development plan — and return dated log entries tied to leadership or engineering principles.
+disable-model-invocation: true
 ---
 
 Given any input — a Slack thread, PR comment, 1:1 notes, engineering discussion, or a development plan — extract actionable growth opportunities and return one dated log entry per opportunity. Output only the entries — no intro, no preamble, no commentary.

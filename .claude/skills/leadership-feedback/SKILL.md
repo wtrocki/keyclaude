@@ -1,6 +1,7 @@
 ---
 name: leadership-feedback
 description: Analyze a Slack thread or message from a staff engineering and leadership lens. Produces a structured 3-section analysis — signals present, signals missing or weak, framing or follow-up recommendation. Evidence-based, no hallucination.
+disable-model-invocation: true
 ---
 
 Given a Slack thread, message, or excerpt from an engineering discussion, produce exactly three labeled sections in the format below. Output only the three sections — no intro, no preamble, no extra commentary.

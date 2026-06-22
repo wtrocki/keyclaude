@@ -3,6 +3,9 @@
 #        bin/growth-capture /path/to/plan.md       — from a file (e.g. a development plan)
 set -euo pipefail
 
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+source "$SCRIPT_DIR/lib.sh"
+
 DATA_ROOT="${GROWTH_REPO:-$HOME/notes/data}"
 LOG_FILE="$DATA_ROOT/growth-log.md"
 
@@ -13,7 +16,7 @@ else
 fi
 [[ -z "$INPUT" ]] && { echo "Error: no input text" >&2; exit 1; }
 
-RESULT=$(printf '%s' "$INPUT" | claude -p "/growth-capture")
+RESULT=$(printf '%s' "$INPUT" | ai "/growth-capture")
 printf '%s' "$RESULT" | pbcopy
 
 mkdir -p "$DATA_ROOT"

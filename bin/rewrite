@@ -1,6 +1,10 @@
 #!/usr/bin/env bash
 # Usage: echo "draft text" | bin/rewrite [default|leadership|external]
 set -euo pipefail
+
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+source "$SCRIPT_DIR/lib.sh"
+
 export LANG=en_US.UTF-8
 export LC_ALL=en_US.UTF-8
 
@@ -16,14 +20,14 @@ case "$MODE" in
   *) echo "Unknown mode: $MODE (valid: default, leadership, external)" >&2; exit 1 ;;
 esac
 
-RESULT=$(printf '[mode: %s]\n%s' "$MODE" "$INPUT" | claude -p "/rewrite-inline")
+RESULT=$(printf '[mode: %s]\n%s' "$MODE" "$INPUT" | ai "/rewrite-inline")
 printf '%s' "$RESULT" | pbcopy
 
 afplay /System/Library/Sounds/Glass.aiff &
 osascript -e 'display notification "Rewritten text copied to clipboard." with title "Rewrite"' &
 
 (
-  INSIGHTS=$(printf '## Original\n%s\n\n## Rewritten\n%s' "$INPUT" "$RESULT" | claude -p "/writing-insights")
+  INSIGHTS=$(printf '## Original\n%s\n\n## Rewritten\n%s' "$INPUT" "$RESULT" | ai "/writing-insights")
   mkdir -p "$(dirname "$LOG_FILE")"
   TIMESTAMP=$(date +"%Y-%m-%d %H:%M")
   ORIGINAL_PREVIEW=$(printf '%s' "$INPUT" | head -c 300)

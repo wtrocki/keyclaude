@@ -4,7 +4,7 @@
 
 **Engineering Personal Assistant**
 
-A personal productivity layer for engineers that uses keyboard shortcuts to trigger Claude Code agents directly from the desktop. Agents perform scheduled tasks, weekly planning, and message rewriting — without breaking your flow.
+A personal productivity layer for engineers that uses keyboard shortcuts to trigger AI agents directly from the desktop. Agents perform scheduled tasks, weekly planning, and message rewriting — without breaking your flow.
 
 ---
 
@@ -36,7 +36,7 @@ Skills can fetch and inject relevant data from MCP servers (Glean, GitHub, Slack
 Agents deliver scheduled lessons based on user-triggered sessions — coaching that adapts to your cadence and what you're actually working on.
 
 ### Slide Deck Creator
-Type `/slides <topic>` in Claude Code to generate a complete reveal.js presentation. The skill writes a Markdown source file and builds a standalone HTML deck via pandoc. Includes a MongoDB-branded CSS theme; works with any reveal.js theme. Edit the Markdown and rebuild with the printed pandoc command.
+Type `/slides <topic>` in your AI CLI to generate a complete reveal.js presentation. The skill writes a Markdown source file and builds a standalone HTML deck via pandoc. Includes a MongoDB-branded CSS theme; works with any reveal.js theme. Edit the Markdown and rebuild with the printed pandoc command.
 
 ---
 
@@ -62,6 +62,8 @@ cd keyclaude
 
 # 2. Run the installer (installs pandoc, sets up GROWTH_REPO, installs macOS shortcuts)
 ./install.sh
+
+The bin scripts use **opencode** by default and fall back to **Claude Code** if opencode isn't found.
 
 # 3. Activate shortcuts — pick one:
 #    macOS Services: assign keys in System Settings → Keyboard → Shortcuts → Services → Text
@@ -99,7 +101,9 @@ Agents are coaching contexts — they hold a persona and invoke skills for deepe
 | `leadership-agent` | Staff engineering coaching: analyzes notes and threads, identifies leadership signals, coaches toward staff patterns |
 
 ```bash
-claude --profile .claude/profiles/leadership-agent.yaml
+# Requires an AI CLI that supports agents (e.g., opencode, claude)
+# opencode:  opencode --agent .claude/profiles/leadership-agent.yaml
+# claude:    claude --profile .claude/profiles/leadership-agent.yaml
 ```
 
 ---

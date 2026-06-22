@@ -1,6 +1,7 @@
 ---
 name: rewrite-inline
 description: Rewrite selected text to be clearer, more professional, and outcome-focused while preserving meaning. Supports three modes — default, leadership, and external — selected via a mode prefix in the user's input.
+disable-model-invocation: true
 ---
 
 The user may optionally prefix their input with a mode directive. If no mode is specified, use `default`.

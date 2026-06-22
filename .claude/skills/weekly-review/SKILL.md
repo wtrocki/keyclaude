@@ -1,6 +1,7 @@
 ---
 name: weekly-review
 description: Synthesize a weekly note into five structured bullets — Focus Check, Cross-team Quality, Priority Shift, Priority Judgment, and Mentorship Signal — for weekly self-reflection and 1:1 preparation.
+disable-model-invocation: true
 ---
 
 Given a weekly note (a `weekly/YYYY-WNN.md` file or free-form weekly summary), produce exactly five labeled bullets in the format specified below. Output only the five bullets — no intro, no extra text, no explanation.
