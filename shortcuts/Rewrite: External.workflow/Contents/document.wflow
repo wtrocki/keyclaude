@@ -59,9 +59,8 @@
                 <key>ActionParameters</key>
                 <dict>
                     <key>COMMAND_STRING</key>
-                    <string>export PATH="/usr/local/bin:/opt/homebrew/bin:$HOME/.local/bin:$PATH"
-REAL=$(python3 -c "import os; print(os.path.realpath('$HOME/Library/Services/Rewrite: External.workflow'))")
-REPO_ROOT="$(dirname "$(dirname "$REAL")")"
+                    <string>export PATH="/usr/local/bin:/opt/homebrew/bin:$HOME/.local/bin:$HOME/.opencode/bin:$PATH"
+REPO_ROOT="/Users/w.trocki/Projects/keyclaude"
 "$REPO_ROOT/bin/rewrite" external</string>
                     <key>CheckedForUserDefaultShell</key>
                     <true/>

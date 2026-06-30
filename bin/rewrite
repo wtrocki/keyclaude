@@ -20,7 +20,10 @@ case "$MODE" in
   *) echo "Unknown mode: $MODE (valid: default, leadership, external)" >&2; exit 1 ;;
 esac
 
-RESULT=$(printf '[mode: %s]\n%s' "$MODE" "$INPUT" | ai "/rewrite-inline")
+if ! RESULT=$(printf '[mode: %s]\n%s' "$MODE" "$INPUT" | ai "/rewrite-inline"); then
+  osascript -e 'display notification "Rewrite failed: AI server error. Check your connection and try again." with title "Rewrite Error" sound name "Basso"'
+  exit 1
+fi
 printf '%s' "$RESULT" | pbcopy
 
 afplay /System/Library/Sounds/Glass.aiff &

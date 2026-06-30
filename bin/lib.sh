@@ -3,15 +3,27 @@
 # Provides an `ai` command that prefers `opencode` (if available)
 # and falls back to `claude`.
 
-if command -v opencode &>/dev/null; then
+_find_opencode() {
+  command -v opencode 2>/dev/null && return
+  for dir in "$HOME/.opencode/bin" "$HOME/.local/bin" "/opt/homebrew/bin" "/usr/local/bin"; do
+    [[ -x "$dir/opencode" ]] && { echo "$dir/opencode"; return; }
+  done
+  return 1
+}
+
+_OPCODE=$(_find_opencode)
+if [[ -n "$_OPCODE" ]]; then
   ai() {
-    opencode run "$@"
+    local attempt=0
+    until "$_OPCODE" run "$@" 2>/dev/null; do
+      attempt=$((attempt + 1))
+      [[ $attempt -ge 3 ]] && return 1
+      sleep 2
+    done
   }
 elif command -v claude &>/dev/null; then
-  ai() {
-    claude -p "$@"
-  }
+  ai() { claude -p "$@"; }
 else
-  echo "Error: neither opencode nor claude found in PATH" >&2
+  echo "Error: neither opencode nor claude found" >&2
   exit 1
 fi
