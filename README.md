@@ -90,6 +90,7 @@ Skills are stateless — they transform input into structured output.
 | `leadership-feedback` | Analyze a thread: signals present, signals missing, one concrete recommendation |
 | `weekly-review` | Synthesize a weekly note into five bullets: Focus, Cross-team Quality, Priority Shift, Priority Judgment, Mentorship Signal |
 | `growth-capture` | Extract growth opportunities from any input (discussion, feedback, or development plan) — logs dated entries tied to leadership principles |
+| `monthly-review` | Aggregate a period's weekly notes against the monthly plan into a snapshot: Impact Stories by North Star + LP tag, What Closed/Shipped, Major/Minor/Elective draft plan, backlog delta. Reads `growth/leadership-principles.md` + `growth/signals.md` as evaluation context — seed examples in [`examples/growth/`](examples/growth/) |
 | `slides` | Generate a reveal.js slide deck from a topic: `/slides <topic>` — outputs editable Markdown + standalone HTML |
 
 ## Agents
@@ -126,6 +127,8 @@ keyclaude/                    $GROWTH_REPO/
   bin/rewrite          ──writes──▶   writing-insights.md
   bin/growth-capture   ──reads ──▶   (stdin or file)
                        ──writes──▶   growth-log.md
+  bin/monthly-review   ──reads ──▶   growth/*EDP*.md, growth/backlog.md, weekly/*.md
+                       ──writes──▶   growth/reviews/YYYY-MM-DD.md
 ```
 
 ### Bin Scripts
@@ -137,6 +140,7 @@ keyclaude/                    $GROWTH_REPO/
 | `bin/growth-capture` | `pbpaste \| bin/growth-capture` or `bin/growth-capture /path/to/plan.md` |
 | `bin/weekly-init` | `bin/weekly-init [YYYY-WNN]` — create a new weekly note |
 | `bin/weekly-review` | `bin/weekly-review [YYYY-WNN]` — synthesize into five bullets |
+| `bin/monthly-review` | `bin/monthly-review [YYYY-MM-DD]` — snapshot the period since the last cutoff into `growth/reviews/<cutoff>.md` |
 
 ---
 

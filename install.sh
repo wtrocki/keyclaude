@@ -51,12 +51,12 @@ echo "==> Checking GROWTH_REPO"
 if [[ -z "${GROWTH_REPO:-}" ]]; then
   DEFAULT_DIR="$HOME/notes/data"
   echo "  GROWTH_REPO is not set — creating default at $DEFAULT_DIR"
-  mkdir -p "$DEFAULT_DIR/weekly"
+  mkdir -p "$DEFAULT_DIR/weekly" "$DEFAULT_DIR/growth/reviews"
   echo "export GROWTH_REPO=$DEFAULT_DIR" >> "$HOME/.zshrc"
   echo "  Added to ~/.zshrc. Run: source ~/.zshrc"
 else
   echo "  ok  GROWTH_REPO=$GROWTH_REPO"
-  mkdir -p "$GROWTH_REPO/weekly"
+  mkdir -p "$GROWTH_REPO/weekly" "$GROWTH_REPO/growth/reviews"
 fi
 
 # ── 3. AI agent skills ───────────────────────────────────────────────────────

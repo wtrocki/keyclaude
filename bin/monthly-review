@@ -1,0 +1,99 @@
+#!/usr/bin/env bash
+# monthly-review — aggregate a period's weekly notes against the P&G / EDP
+# into a manager-ready snapshot under growth/reviews/<cutoff>.md.
+#
+# Reviews are NOT on a fixed calendar. A review is defined by its cutoff date
+# (the snapshot filename). The period under review runs from the previous
+# cutoff (latest existing reviews/*.md) up to this one.
+#
+# Usage:
+#   bin/monthly-review              # cutoff = today
+#   bin/monthly-review 2026-07-17   # explicit cutoff date (YYYY-MM-DD)
+set -euo pipefail
+
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+source "$SCRIPT_DIR/lib.sh"
+
+DATA_ROOT="${GROWTH_REPO:-$HOME/notes/data}"
+GROWTH_DIR="$DATA_ROOT/growth"
+WEEKLY_DIR="$DATA_ROOT/weekly"
+REVIEWS_DIR="$GROWTH_DIR/reviews"
+BACKLOG="$GROWTH_DIR/backlog.md"
+
+CUTOFF="${1:-$(date +%F)}"
+[[ "$CUTOFF" =~ ^[0-9]{4}-[0-9]{2}-[0-9]{2}$ ]] || { echo "Error: cutoff must be YYYY-MM-DD, got: $CUTOFF" >&2; exit 1; }
+
+# The EDP file has a long name; resolve the first non-archive plan file.
+EDP=$(find "$GROWTH_DIR" -maxdepth 1 -name "*Employee Development Plan.md" ! -name "*archive*" | head -1)
+[[ -z "$EDP" ]] && { echo "Error: EDP doc not found in $GROWTH_DIR" >&2; exit 1; }
+
+mkdir -p "$REVIEWS_DIR"
+OUT="$REVIEWS_DIR/${CUTOFF}.md"
+[[ -f "$OUT" ]] && { echo "Error: review already exists: $OUT" >&2; exit 1; }
+
+# ISO year-week ordinal (YYYY*100 + WW) for range comparison.
+iso_ord() { date -j -f "%Y-%m-%d" "$1" +"%G%V" 2>/dev/null || return 1; }
+
+CUTOFF_ORD=$(iso_ord "$CUTOFF") || { echo "Error: cannot parse cutoff date" >&2; exit 1; }
+
+# Last cutoff = date of the most recent existing review file (before this one).
+LAST_CUTOFF=""
+LAST_ORD=0
+for f in "$REVIEWS_DIR"/*.md; do
+  [[ -e "$f" ]] || continue
+  d=$(basename "$f" .md)
+  [[ "$d" =~ ^[0-9]{4}-[0-9]{2}-[0-9]{2}$ ]] || continue
+  [[ "$d" < "$CUTOFF" || "$d" == "$CUTOFF" ]] || continue
+  if [[ "$d" > "$LAST_CUTOFF" ]]; then
+    LAST_CUTOFF="$d"
+    LAST_ORD=$(iso_ord "$d")
+  fi
+done
+[[ -z "$LAST_CUTOFF" ]] && LAST_CUTOFF="(project start)"
+
+# Select weekly notes whose ISO week is in (LAST_ORD, CUTOFF_ORD].
+WEEKLIES=()
+if [[ -d "$WEEKLY_DIR" ]]; then
+  for f in "$WEEKLY_DIR"/[0-9][0-9][0-9][0-9]-W[0-9][0-9].md; do
+    [[ -e "$f" ]] || continue
+    base=$(basename "$f" .md)          # YYYY-WNN
+    ord="${base%-W*}${base##*-W}"      # YYYYWW
+    if (( ord > LAST_ORD && ord <= CUTOFF_ORD )); then
+      WEEKLIES+=("$f")
+    fi
+  done
+fi
+
+if [[ ${#WEEKLIES[@]} -eq 0 ]]; then
+  echo "Error: no weekly notes in period $LAST_CUTOFF → $CUTOFF ($WEEKLY_DIR)" >&2
+  exit 1
+fi
+
+# Assemble the bundled input for the skill.
+bundle() {
+  printf 'PERIOD: %s → %s\n\n' "$LAST_CUTOFF" "$CUTOFF"
+  for f in "$EDP" "$BACKLOG" "${WEEKLIES[@]}" \
+           "$GROWTH_DIR/leadership-principles.md" "$GROWTH_DIR/signals.md"; do
+    [[ -f "$f" ]] || continue
+    printf '===== FILE: %s =====\n' "${f#$DATA_ROOT/}"
+    cat "$f"
+    printf '\n\n'
+  done
+}
+
+echo "Period: $LAST_CUTOFF → $CUTOFF  (${#WEEKLIES[@]} weekly notes)" >&2
+RAW=$(bundle | ai "/monthly-review")
+
+# The AI CLI may wrap the answer in agent narration. Slice out the snapshot
+# between the '## Period Review' heading and the END SNAPSHOT sentinel.
+SNAPSHOT=$(printf '%s\n' "$RAW" | awk '
+  /^## Period Review/ { grab=1 }
+  grab { print }
+  /END SNAPSHOT/ { exit }
+')
+[[ -z "$SNAPSHOT" ]] && SNAPSHOT="$RAW"   # fall back to raw if markers missing
+
+printf '%s\n' "$SNAPSHOT" > "$OUT"
+printf '%s\n' "$SNAPSHOT"
+echo "Wrote: $OUT" >&2
+echo "Review the Backlog Delta above, then hand-apply to $BACKLOG." >&2
