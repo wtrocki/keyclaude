@@ -91,7 +91,21 @@ SNAPSHOT=$(printf '%s\n' "$RAW" | awk '
   grab { print }
   /END SNAPSHOT/ { exit }
 ')
-[[ -z "$SNAPSHOT" ]] && SNAPSHOT="$RAW"   # fall back to raw if markers missing
+
+# The AI CLI is agentic and occasionally narrates / explores instead of
+# emitting the snapshot. Reject markerless output rather than writing garbage.
+if ! printf '%s\n' "$SNAPSHOT" | grep -q "END SNAPSHOT"; then
+  echo "Error: model did not return a valid snapshot (no markers found)." >&2
+  echo "Nothing written. Re-run bin/monthly-review $CUTOFF to retry." >&2
+  { echo "----- raw model output -----"; printf '%s\n' "$RAW"; } >&2
+  exit 1
+fi
+
+# Stamp the authoritative period on the heading (the model is unreliable here).
+SNAPSHOT=$(printf '%s\n' "$SNAPSHOT" | awk -v hdr="## Period Review — $LAST_CUTOFF → $CUTOFF" '
+  !done && /^## Period Review/ { print hdr; done=1; next }
+  { print }
+')
 
 printf '%s\n' "$SNAPSHOT" > "$OUT"
 printf '%s\n' "$SNAPSHOT"
