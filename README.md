@@ -47,6 +47,7 @@ Type `/slides <topic>` in your AI CLI to generate a complete reveal.js presentat
 | Action | When | How |
 |--------|------|-----|
 | **Rewrite** | Before sending anything important | Select text → `⌃⌥R` (or copy → Raycast) |
+| **Later** | Saving a task from Slack or anywhere | Select text → `⌃⌥L` (Slack thread link auto-detected from clipboard) |
 | **Growth capture** | After a 1:1, review, or notable discussion | Select text → `⌃⌥G` (or `pbpaste \| bin/growth-capture`) |
 | **Leadership feedback** | After a notable thread, review, or decision | `pbpaste \| bin/leadership-feedback` |
 | **Weekly** | Monday to create, Friday to review | `bin/weekly-init` / `bin/weekly-review` |
@@ -77,6 +78,8 @@ Suggested key bindings:
 | Rewrite: Default | `⌃⌥R` |
 | Rewrite: Leadership | `⌃⌥P` |
 | Rewrite: External | `⌃⌥E` |
+| Action: Later | `⌃⌥L` |
+| Action: Capture | `⌃⌥G` |
 
 ---
 
@@ -125,6 +128,7 @@ keyclaude/                    $GROWTH_REPO/
   bin/leadership-feedback ─reads──▶  (stdin)
                        ──writes──▶   leadership-log.md
   bin/rewrite          ──writes──▶   writing-insights.md
+  bin/later            ──writes──▶   Later tasks.md
   bin/growth-capture   ──reads ──▶   (stdin or file)
                        ──writes──▶   growth-log.md
   bin/monthly-review   ──reads ──▶   growth/*EDP*.md, growth/backlog.md, weekly/*.md
@@ -136,6 +140,7 @@ keyclaude/                    $GROWTH_REPO/
 | Script | Usage |
 |--------|-------|
 | `bin/rewrite` | `echo "text" \| bin/rewrite [default\|leadership\|external]` |
+| `bin/later` | `echo "task text" \| bin/later` — appends to `Later tasks.md` with optional Slack thread link from clipboard |
 | `bin/leadership-feedback` | `pbpaste \| bin/leadership-feedback` |
 | `bin/growth-capture` | `pbpaste \| bin/growth-capture` or `bin/growth-capture /path/to/plan.md` |
 | `bin/weekly-init` | `bin/weekly-init [YYYY-WNN]` — create a new weekly note |
