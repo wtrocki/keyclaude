@@ -1,0 +1,27 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+DATA_ROOT="${GROWTH_REPO:-$HOME/Projects/engineering-notes/data}"
+TASKS_FILE="$DATA_ROOT/Later tasks.md"
+
+INPUT=$(cat)
+[[ -z "$INPUT" ]] && { echo "Error: no input text" >&2; exit 1; }
+
+CLIPBOARD=$(pbpaste 2>/dev/null || true)
+SLACK_URL=""
+if [[ "$CLIPBOARD" =~ https?://[a-zA-Z0-9.-]+\.slack\.com/archives/[^\ ]+ ]]; then
+  SLACK_URL="$CLIPBOARD"
+fi
+
+LINE=$(printf '%s' "$INPUT" | head -1)
+if [[ -n "$SLACK_URL" ]]; then
+  ENTRY="- [ ] $LINE ([thread]($SLACK_URL))"
+else
+  ENTRY="- [ ] $LINE"
+fi
+
+mkdir -p "$DATA_ROOT"
+printf '%s\n' "$ENTRY" >> "$TASKS_FILE"
+
+afplay /System/Library/Sounds/Glass.aiff &
+osascript -e 'display notification "'"$LINE"'" with title "Later: Task saved"' &

@@ -12,7 +12,7 @@
 # Assign keyboard shortcuts:
 #   System Settings → Keyboard → Keyboard Shortcuts → Services → Text
 #   Suggested: ⌃⌥R = Rewrite: Default   ⌃⌥P = Rewrite: Leadership   ⌃⌥E = Rewrite: External
-#              ⌃⌥G = Action: Capture
+#              ⌃⌥G = Action: Capture   ⌃⌥L = Action: Later
 set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
@@ -46,9 +46,10 @@ link_workflow "Rewrite: Default"
 link_workflow "Rewrite: Leadership"
 link_workflow "Rewrite: External"
 link_workflow "Action: Capture"
+link_workflow "Action: Later"
 
 echo ""
 echo "Done. Shortcuts are installed but inert until you assign keys manually."
 echo "  System Settings → Keyboard → Keyboard Shortcuts → Services → Text"
 echo "  Suggested: ⌃⌥R = Rewrite: Default   ⌃⌥P = Rewrite: Leadership   ⌃⌥E = Rewrite: External"
-echo "             ⌃⌥G = Action: Capture"
+echo "             ⌃⌥G = Action: Capture    ⌃⌥L = Action: Later"
