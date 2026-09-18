@@ -5,7 +5,7 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 source "$SCRIPT_DIR/lib.sh"
 
 DATA_ROOT="${KEYCLAUDE_DATA_REPO:-$HOME/notes/data}"
-TASKS_FILE="$DATA_ROOT/Later tasks.md"
+TASKS_FILE="$DATA_ROOT/backlog.md"
 
 INPUT=$(cat)
 [[ -z "$INPUT" ]] && { echo "Error: no input text" >&2; exit 1; }
@@ -34,4 +34,4 @@ mkdir -p "$DATA_ROOT"
 printf '%s\n' "$ENTRY" >> "$TASKS_FILE"
 
 afplay /System/Library/Sounds/Glass.aiff &
-osascript -e 'display notification "'"$PREVIEW"'" with title "Later: Task saved"' &
+osascript -e 'display notification "'"$PREVIEW"'" with title "Later: Saved to backlog"' &

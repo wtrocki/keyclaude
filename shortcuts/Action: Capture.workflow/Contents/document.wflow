@@ -63,8 +63,7 @@
 # Resolve symlink to find the real repo location
 REPO_ROOT="/Users/w.trocki/Projects/keyclaude"
 "$REPO_ROOT/bin/capture"</string>
-<zmparameter name="oldString" string="true">"$REPO_ROOT/bin/growth-capture"</string>
-                    <key>CheckedForUserDefaultShell</key>
+                     <key>CheckedForUserDefaultShell</key>
                     <true/>
                     <key>inputMethod</key>
                     <integer>0</integer>

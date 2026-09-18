@@ -47,12 +47,19 @@ Type `/slides <topic>` in your AI CLI to generate a complete reveal.js presentat
 | Action | When | How |
 |--------|------|-----|
 | **Rewrite** | Before sending anything important | Select text → `⌃⌥R` (or copy → Raycast) |
-| **Later** | Saving a task from Slack or anywhere | Select text → `⌃⌥L` (Slack thread link auto-detected from clipboard) |
-| **Growth capture** | After a 1:1, review, or notable discussion | Select text → `⌃⌥G` (or `pbpaste \| bin/growth-capture`) |
-| **Leadership feedback** | After a notable thread, review, or decision | `pbpaste \| bin/leadership-feedback` |
-| **Weekly** | Monday to create, Friday to review | `bin/weekly-init` / `bin/weekly-review` |
+| **Later** | Save a task from Slack or anywhere | Select text → `⌃⌥L` (Slack thread link auto-detected from clipboard) |
+| **Capture** | After a 1:1, review, or notable discussion | Select text → `⌃⌥G` (or `pbpaste \| keyclaude-capture`) |
 
-NOTE: Lefership feedback and Weekly are advanced features. 
+### Weekly Actions
+
+| Action | When | How |
+|--------|------|-----|
+| **Review backlog** | Daily or end of week | `keyclaude review backlog` |
+| **Review work log** | End of week | `keyclaude review work-log` |
+| **Weekly note** | Monday create, Friday review | `keyclaude-weekly-init` / `keyclaude-weekly-review` |
+| **Leadership feedback** | After a notable decision or review | `pbpaste \| keyclaude-leadership-feedback` |
+
+NOTE: Leadership feedback and weekly review are advanced features. Start with Rewrite, Later, and Capture. 
 
 ### Install
 
@@ -95,7 +102,7 @@ Skills are stateless — they transform input into structured output.
 | `rewrite-inline` | Rewrite text: `default` (internal comms), `leadership` (outcome-first), `external` (public-facing) |
 | `leadership-feedback` | Analyze a thread: signals present, signals missing, one concrete recommendation |
 | `weekly-review` | Synthesize a weekly note into five bullets: Focus, Cross-team Quality, Priority Shift, Priority Judgment, Mentorship Signal |
-| `growth-capture` | Extract growth opportunities from any input (discussion, feedback, or development plan) — logs dated entries tied to leadership principles |
+| `capture` | Log text as work evidence with optional AI analysis — saves raw input + analysis to `work-log.md` |
 | `monthly-review` | Aggregate a period's weekly notes against the monthly plan into a snapshot: Impact Stories by North Star + LP tag, What Closed/Shipped, Major/Minor/Elective draft plan, backlog delta. Reads `growth/leadership-principles.md` + `growth/signals.md` as evaluation context — seed examples in [`examples/growth/`](examples/growth/) |
 | `slides` | Generate a reveal.js slide deck from a topic: `/slides <topic>` — outputs editable Markdown + standalone HTML |
 
@@ -117,20 +124,39 @@ Agents are coaching contexts — they hold a persona and invoke skills for deepe
 
 ## CLI
 
-The `keyclaude` command manages installation and configuration:
+The `keyclaude` command manages installation, configuration, and review:
 
 ```bash
 keyclaude install                # Run full setup
 keyclaude config                 # Show current config
 keyclaude config set KEYCLAUDE_DATA_REPO=/path/to/data   # Change data directory
+keyclaude review backlog         # Open backlog in Plannotator
+keyclaude review weekly          # Open current week in Plannotator
+keyclaude review work-log        # Open work log in Plannotator
 ```
 
 Individual commands are also available directly:
 
 ```bash
 keyclaude-rewrite default        # Rewrite text
-keyclaude-later                  # Save task to later queue
-keyclaude-growth-capture         # Extract growth opportunities
+keyclaude-later                  # Save task to backlog
+keyclaude-capture                # Log work evidence
+```
+
+## Plannotator
+
+KeyClaude integrates with [Plannotator](https://github.com/wtrocki/plannotator) for browser-based annotation of your data files. Use it to review and annotate your backlog, weekly notes, and work log without leaving your flow.
+
+```bash
+# Review and annotate any data file:
+keyclaude review backlog         # Annotate your task backlog
+keyclaude review work-log        # Annotate your work evidence log
+keyclaude review weekly          # Annotate current week's note
+keyclaude review weekly 2026-W33 # Annotate a specific week
+keyclaude review writing         # Annotate writing insights
+
+# Or open any file directly:
+plannotator annotate ~/Projects/engineering-notes/data/weekly/2026-W33.md
 ```
 
 ## Config
@@ -167,8 +193,7 @@ keyclaude/                    $KEYCLAUDE_DATA_REPO/
                        ──writes──▶   leadership-log.md
   bin/rewrite          ──writes──▶   writing-insights.md
   bin/later            ──writes──▶   Later tasks.md
-  bin/growth-capture   ──reads ──▶   (stdin or file)
-                       ──writes──▶   growth-log.md
+  bin/capture          ──writes──▶   work-log.md
   bin/monthly-review   ──reads ──▶   growth/*EDP*.md, growth/backlog.md, weekly/*.md
                        ──writes──▶   growth/reviews/YYYY-MM-DD.md
 ```
@@ -180,7 +205,7 @@ keyclaude/                    $KEYCLAUDE_DATA_REPO/
 | `bin/rewrite` | `echo "text" \| bin/rewrite [default\|leadership\|external]` |
 | `bin/later` | `echo "task text" \| bin/later` — appends to `Later tasks.md` with optional Slack thread link from clipboard |
 | `bin/leadership-feedback` | `pbpaste \| bin/leadership-feedback` |
-| `bin/growth-capture` | `pbpaste \| bin/growth-capture` or `bin/growth-capture /path/to/plan.md` |
+| `bin/capture` | `echo "text" \| bin/capture` — log as work evidence with timestamp and optional AI analysis |
 | `bin/weekly-init` | `bin/weekly-init [YYYY-WNN]` — create a new weekly note |
 | `bin/weekly-review` | `bin/weekly-review [YYYY-WNN]` — synthesize into five bullets |
 | `bin/monthly-review` | `bin/monthly-review [YYYY-MM-DD]` — snapshot the period since the last cutoff into `growth/reviews/<cutoff>.md` |

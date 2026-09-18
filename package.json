@@ -10,7 +10,7 @@
     "keyclaude-weekly-init": "./bin/weekly-init",
     "keyclaude-weekly-review": "./bin/weekly-review",
     "keyclaude-monthly-review": "./bin/monthly-review",
-    "keyclaude-growth-capture": "./bin/growth-capture",
+    "keyclaude-capture": "./bin/capture",
     "keyclaude-leadership-feedback": "./bin/leadership-feedback",
     "keyclaude-later": "./bin/later",
     "keyclaude": "./bin/keyclaude"

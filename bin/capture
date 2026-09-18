@@ -32,7 +32,7 @@ mkdir -p "$DATA_ROOT"
     printf '\n[source](%s)\n' "$SLACK_URL"
   fi
   printf '\n'
-  if RESULT=$(printf '%s' "$INPUT" | ai "/growth-capture" 2>/dev/null); then
+  if RESULT=$(printf '%s' "$INPUT" | timeout 30 ai "/capture" 2>/dev/null); then
     printf '%s\n' "$RESULT"
     printf '\n'
   fi

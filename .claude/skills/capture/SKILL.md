@@ -1,5 +1,5 @@
 ---
-name: growth-capture
+name: capture
 description: Extract personal growth opportunities from any input — a discussion, feedback, or a development plan — and return dated log entries tied to leadership or engineering principles.
 disable-model-invocation: true
 ---

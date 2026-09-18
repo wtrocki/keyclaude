@@ -2,7 +2,9 @@
 set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+source "$SCRIPT_DIR/lib.sh"
 REPO_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
+DATA_ROOT="${KEYCLAUDE_DATA_REPO:-$HOME/notes/data}"
 
 cmd_help() {
   echo "keyclaude — Engineering Personal Assistant"
@@ -11,11 +13,18 @@ cmd_help() {
   echo "  install          Run full setup (macOS shortcuts, config, brew deps)"
   echo "  config           Show current config"
   echo "  config set KEY=VAL  Set a config value"
+  echo "  review <what>    Open a data file in Plannotator for review"
+  echo ""
+  echo "Review targets:"
+  echo "  backlog          Task backlog"
+  echo "  work-log         Work evidence log"
+  echo "  weekly [N]       Weekly note (default: auto-detect current week)"
+  echo "  writing          Writing insights"
   echo ""
   echo "Skills (also available as direct commands):"
   echo "  keyclaude-rewrite [default|leadership|external]"
   echo "  keyclaude-later"
-  echo "  keyclaude-growth-capture"
+  echo "  keyclaude-capture"
   echo "  keyclaude-leadership-feedback"
   echo "  keyclaude-weekly-init [YYYY-WNN]"
   echo "  keyclaude-weekly-review [YYYY-WNN]"
@@ -57,9 +66,44 @@ cmd_config() {
   esac
 }
 
+cmd_review() {
+  local target="${1:-}"
+  local file=""
+
+  case "$target" in
+    backlog)
+      file="$DATA_ROOT/backlog.md"
+      ;;
+    work-log)
+      file="$DATA_ROOT/work-log.md"
+      ;;
+    writing)
+      file="$DATA_ROOT/writing-insights.md"
+      ;;
+    weekly)
+      local week="${2:-$(date +"%Y-W%V")}"
+      file="$DATA_ROOT/weekly/${week}.md"
+      ;;
+    *)
+      echo "Unknown review target: $target" >&2
+      echo "Usage: keyclaude review [backlog|work-log|weekly [N]|writing]" >&2
+      exit 1
+      ;;
+  esac
+
+  if [[ ! -f "$file" ]]; then
+    echo "File not found: $file" >&2
+    exit 1
+  fi
+
+  echo "Opening in Plannotator: $file"
+  plannotator annotate "$file"
+}
+
 case "${1:-help}" in
   help|-h|--help)  cmd_help ;;
   install)         cmd_install ;;
   config)          cmd_config "${2:-}" "${3:-}" ;;
+  review)          cmd_review "${2:-}" "${3:-}" ;;
   *)               cmd_help ;;
 esac
