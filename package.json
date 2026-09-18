@@ -11,7 +11,6 @@
     "keyclaude-weekly-review": "./bin/weekly-review",
     "keyclaude-monthly-review": "./bin/monthly-review",
     "keyclaude-capture": "./bin/capture",
-    "keyclaude-leadership-feedback": "./bin/leadership-feedback",
     "keyclaude-later": "./bin/later",
     "keyclaude": "./bin/keyclaude"
   },

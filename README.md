@@ -57,9 +57,8 @@ Type `/slides <topic>` in your AI CLI to generate a complete reveal.js presentat
 | **Review backlog** | Daily or end of week | `keyclaude review backlog` |
 | **Review work log** | End of week | `keyclaude review work-log` |
 | **Weekly note** | Monday create, Friday review | `keyclaude-weekly-init` / `keyclaude-weekly-review` |
-| **Leadership feedback** | After a notable decision or review | `pbpaste \| keyclaude-leadership-feedback` |
 
-NOTE: Leadership feedback and weekly review are advanced features. Start with Rewrite, Later, and Capture. 
+NOTE: Weekly review is an advanced feature. Start with Rewrite, Later, and Capture. 
 
 ### Install
 
@@ -100,7 +99,6 @@ Skills are stateless — they transform input into structured output.
 | Skill | What it does |
 |-------|-------------|
 | `rewrite-inline` | Rewrite text: `default` (internal comms), `leadership` (outcome-first), `external` (public-facing) |
-| `leadership-feedback` | Analyze a thread: signals present, signals missing, one concrete recommendation |
 | `weekly-review` | Synthesize a weekly note into five bullets: Focus, Cross-team Quality, Priority Shift, Priority Judgment, Mentorship Signal |
 | `capture` | Log text as work evidence with optional AI analysis — saves raw input + analysis to `work-log.md` |
 | `monthly-review` | Aggregate a period's weekly notes against the monthly plan into a snapshot: Impact Stories by North Star + LP tag, What Closed/Shipped, Major/Minor/Elective draft plan, backlog delta. Reads `growth/leadership-principles.md` + `growth/signals.md` as evaluation context — seed examples in [`examples/growth/`](examples/growth/) |
@@ -108,17 +106,13 @@ Skills are stateless — they transform input into structured output.
 
 ## Agents
 
-Agents are coaching contexts — they hold a persona and invoke skills for deeper analysis.
-
-| Profile | Purpose |
-|---------|---------|
-| `leadership-agent` | Staff engineering coaching: analyzes notes and threads, identifies leadership signals, coaches toward staff patterns |
+Agent profiles are optional coaching personas. These live in your data repo, not in keyclaude. To load one:
 
 ```bash
-# Requires an AI CLI that supports agents (e.g., opencode, claude)
-# opencode:  opencode --agent .claude/profiles/leadership-agent.yaml
-# claude:    claude --profile .claude/profiles/leadership-agent.yaml
+opencode --agent ~/Projects/engineering-notes/.claude/profiles/leadership-agent.yaml
 ```
+
+Available agents are up to you — create and maintain them in your data repo alongside your notes.
 
 ---
 
@@ -189,10 +183,8 @@ keyclaude/                    $KEYCLAUDE_DATA_REPO/
   bin/weekly-init      ──writes──▶   weekly/YYYY-WNN.md
   bin/weekly-review    ──reads ──▶   weekly/YYYY-WNN.md
                        ──writes──▶   weekly/YYYY-WNN.md (## Weekly Review appended)
-  bin/leadership-feedback ─reads──▶  (stdin)
-                       ──writes──▶   leadership-log.md
   bin/rewrite          ──writes──▶   writing-insights.md
-  bin/later            ──writes──▶   Later tasks.md
+  bin/later            ──writes──▶   backlog.md
   bin/capture          ──writes──▶   work-log.md
   bin/monthly-review   ──reads ──▶   growth/*EDP*.md, growth/backlog.md, weekly/*.md
                        ──writes──▶   growth/reviews/YYYY-MM-DD.md
@@ -203,8 +195,7 @@ keyclaude/                    $KEYCLAUDE_DATA_REPO/
 | Script | Usage |
 |--------|-------|
 | `bin/rewrite` | `echo "text" \| bin/rewrite [default\|leadership\|external]` |
-| `bin/later` | `echo "task text" \| bin/later` — appends to `Later tasks.md` with optional Slack thread link from clipboard |
-| `bin/leadership-feedback` | `pbpaste \| bin/leadership-feedback` |
+| `bin/later` | `echo "task text" \| bin/later` — appends to `backlog.md` with optional Slack thread link from clipboard |
 | `bin/capture` | `echo "text" \| bin/capture` — log as work evidence with timestamp and optional AI analysis |
 | `bin/weekly-init` | `bin/weekly-init [YYYY-WNN]` — create a new weekly note |
 | `bin/weekly-review` | `bin/weekly-review [YYYY-WNN]` — synthesize into five bullets |

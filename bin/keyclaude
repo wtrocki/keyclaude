@@ -25,7 +25,6 @@ cmd_help() {
   echo "  keyclaude-rewrite [default|leadership|external]"
   echo "  keyclaude-later"
   echo "  keyclaude-capture"
-  echo "  keyclaude-leadership-feedback"
   echo "  keyclaude-weekly-init [YYYY-WNN]"
   echo "  keyclaude-weekly-review [YYYY-WNN]"
   echo "  keyclaude-monthly-review [YYYY-MM-DD]"
