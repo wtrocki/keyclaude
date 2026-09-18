@@ -11,7 +11,7 @@
 #   bin/monthly-review 2026-07-17   # explicit cutoff date (YYYY-MM-DD)
 set -euo pipefail
 
-SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+SCRIPT_DIR="$(cd "$(dirname "$(realpath "$0")")" && pwd)"
 source "$SCRIPT_DIR/lib.sh"
 
 DATA_ROOT="${KEYCLAUDE_DATA_REPO:-$HOME/notes/data}"

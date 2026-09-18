@@ -2,7 +2,7 @@
 # Usage: echo "draft text" | bin/rewrite [default|leadership|external]
 set -euo pipefail
 
-SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+SCRIPT_DIR="$(cd "$(dirname "$(realpath "$0")")" && pwd)"
 source "$SCRIPT_DIR/lib.sh"
 
 export LANG=en_US.UTF-8
