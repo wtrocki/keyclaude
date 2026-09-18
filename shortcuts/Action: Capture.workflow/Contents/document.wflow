@@ -62,7 +62,8 @@
                     <string>export PATH="/usr/local/bin:/opt/homebrew/bin:$HOME/.local/bin:$HOME/.opencode/bin:$PATH"
 # Resolve symlink to find the real repo location
 REPO_ROOT="/Users/w.trocki/Projects/keyclaude"
-"$REPO_ROOT/bin/growth-capture"</string>
+"$REPO_ROOT/bin/capture"</string>
+<zmparameter name="oldString" string="true">"$REPO_ROOT/bin/growth-capture"</string>
                     <key>CheckedForUserDefaultShell</key>
                     <true/>
                     <key>inputMethod</key>

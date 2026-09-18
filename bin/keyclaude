@@ -1,0 +1,65 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+REPO_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
+
+cmd_help() {
+  echo "keyclaude — Engineering Personal Assistant"
+  echo ""
+  echo "Commands:"
+  echo "  install          Run full setup (macOS shortcuts, config, brew deps)"
+  echo "  config           Show current config"
+  echo "  config set KEY=VAL  Set a config value"
+  echo ""
+  echo "Skills (also available as direct commands):"
+  echo "  keyclaude-rewrite [default|leadership|external]"
+  echo "  keyclaude-later"
+  echo "  keyclaude-growth-capture"
+  echo "  keyclaude-leadership-feedback"
+  echo "  keyclaude-weekly-init [YYYY-WNN]"
+  echo "  keyclaude-weekly-review [YYYY-WNN]"
+  echo "  keyclaude-monthly-review [YYYY-MM-DD]"
+}
+
+cmd_install() {
+  "$REPO_ROOT/install.sh"
+}
+
+cmd_config() {
+  local cmd="${1:-show}"
+  case "$cmd" in
+    show)
+      if [[ -f "$HOME/.config/keyclaude/config" ]]; then
+        cat "$HOME/.config/keyclaude/config"
+      else
+        echo "No config file at ~/.config/keyclaude/config"
+      fi
+      ;;
+    set)
+      local kv="${2:-}"
+      [[ -z "$kv" ]] && { echo "Usage: keyclaude config set KEY=VAL" >&2; exit 1; }
+      local key="${kv%%=*}"
+      local val="${kv#*=}"
+      mkdir -p "$HOME/.config/keyclaude"
+      if [[ -f "$HOME/.config/keyclaude/config" ]] && grep -q "^${key}=" "$HOME/.config/keyclaude/config" 2>/dev/null; then
+        sed -i '' "s|^${key}=.*|${key}=${val}|" "$HOME/.config/keyclaude/config"
+      else
+        echo "${key}=${val}" >> "$HOME/.config/keyclaude/config"
+      fi
+      echo "Set ${key}=${val} in ~/.config/keyclaude/config"
+      ;;
+    *)
+      echo "Unknown config command: $cmd" >&2
+      echo "Usage: keyclaude config [show|set KEY=VAL]" >&2
+      exit 1
+      ;;
+  esac
+}
+
+case "${1:-help}" in
+  help|-h|--help)  cmd_help ;;
+  install)         cmd_install ;;
+  config)          cmd_config "${2:-}" "${3:-}" ;;
+  *)               cmd_help ;;
+esac

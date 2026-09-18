@@ -8,7 +8,7 @@ source "$SCRIPT_DIR/lib.sh"
 export LANG=en_US.UTF-8
 export LC_ALL=en_US.UTF-8
 
-DATA_ROOT="${GROWTH_REPO:-$HOME/notes/data}"
+DATA_ROOT="${KEYCLAUDE_DATA_REPO:-$HOME/notes/data}"
 LOG_FILE="$DATA_ROOT/writing-insights.md"
 MODE="${1:-default}"
 

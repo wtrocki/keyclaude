@@ -44,22 +44,28 @@ else
   echo "  - claude:   brew install claude"
 fi
 
-# ── 2. GROWTH_REPO data directory ─────────────────────────────────────────────
+# ── 2. KeyClaude config ──────────────────────────────────────────────────────
 
 echo ""
-echo "==> Checking GROWTH_REPO"
-if [[ -z "${GROWTH_REPO:-}" ]]; then
-  DEFAULT_DIR="$HOME/notes/data"
-  echo "  GROWTH_REPO is not set — creating default at $DEFAULT_DIR"
-  mkdir -p "$DEFAULT_DIR/weekly" "$DEFAULT_DIR/growth/reviews"
-  echo "export GROWTH_REPO=$DEFAULT_DIR" >> "$HOME/.zshrc"
-  echo "  Added to ~/.zshrc. Run: source ~/.zshrc"
-else
-  echo "  ok  GROWTH_REPO=$GROWTH_REPO"
-  mkdir -p "$GROWTH_REPO/weekly" "$GROWTH_REPO/growth/reviews"
-fi
+echo "==> Creating keyclaude config"
+KEYCLAUDE_CONFIG="$HOME/.config/keyclaude/config"
+mkdir -p "$(dirname "$KEYCLAUDE_CONFIG")"
 
-# ── 3. AI agent skills ───────────────────────────────────────────────────────
+# Source existing config if present, so install respects prior settings
+[[ -f "$KEYCLAUDE_CONFIG" ]] && source "$KEYCLAUDE_CONFIG"
+
+KEYCLAUDE_DATA_REPO="${KEYCLAUDE_DATA_REPO:-$HOME/notes/data}"
+echo "KEYCLAUDE_DATA_REPO=$KEYCLAUDE_DATA_REPO" > "$KEYCLAUDE_CONFIG"
+echo "  ok  $KEYCLAUDE_CONFIG → KEYCLAUDE_DATA_REPO=$KEYCLAUDE_DATA_REPO"
+
+# ── 3. Data directories ──────────────────────────────────────────────────────
+
+echo ""
+echo "==> Creating data directories"
+mkdir -p "$KEYCLAUDE_DATA_REPO/weekly" "$KEYCLAUDE_DATA_REPO/growth/reviews"
+echo "  ok  $KEYCLAUDE_DATA_REPO"
+
+# ── 4. AI agent skills ───────────────────────────────────────────────────────
 
 echo ""
 echo "==> Installing AI agent skills"
@@ -81,13 +87,13 @@ install_skills() {
 install_skills "$HOME/.opencode/skills"
 install_skills "$HOME/.claude/skills"
 
-# ── 4. macOS Shortcuts (Rewrite Quick Actions) ────────────────────────────────
+# ── 5. macOS Shortcuts (Rewrite Quick Actions) ────────────────────────────────
 
 echo ""
 echo "==> Installing macOS Service shortcuts"
 "$REPO_DIR/shortcuts/install.sh"
 
-# ── 5. Done ───────────────────────────────────────────────────────────────────
+# ── 6. Done ───────────────────────────────────────────────────────────────────
 
 echo ""
 echo "Done."

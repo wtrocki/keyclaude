@@ -3,6 +3,12 @@
 # Provides an `ai` command that prefers `opencode` (if available)
 # and falls back to `claude`.
 
+CONFIG_FILE="$HOME/.config/keyclaude/config"
+if [[ -f "$CONFIG_FILE" ]]; then
+  source "$CONFIG_FILE"
+fi
+export KEYCLAUDE_DATA_REPO="${KEYCLAUDE_DATA_REPO:-$HOME/notes/data}"
+
 _find_opencode() {
   command -v opencode 2>/dev/null && return
   for dir in "$HOME/.opencode/bin" "$HOME/.local/bin" "/opt/homebrew/bin" "/usr/local/bin"; do

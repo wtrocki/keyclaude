@@ -61,14 +61,17 @@ NOTE: Lefership feedback and Weekly are advanced features.
 git clone https://github.com/wtrocki/keyclaude.git
 cd keyclaude
 
-# 2. Run the installer (installs pandoc, sets up GROWTH_REPO, installs macOS shortcuts)
+# 2. Run setup (config, macOS shortcuts, brew deps)
 ./install.sh
+```
 
 The bin scripts use **opencode** by default and fall back to **Claude Code** if opencode isn't found.
 
-# 3. Activate shortcuts — pick one:
-#    macOS Services: assign keys in System Settings → Keyboard → Shortcuts → Services → Text
-#    Raycast: add shortcuts/raycast/ as a Script Commands directory in Raycast Settings
+Alternatively, install globally via npm to get all commands on PATH:
+
+```bash
+npm install -g .
+keyclaude install
 ```
 
 Suggested key bindings:
@@ -112,16 +115,51 @@ Agents are coaching contexts — they hold a persona and invoke skills for deepe
 
 ---
 
+## CLI
+
+The `keyclaude` command manages installation and configuration:
+
+```bash
+keyclaude install                # Run full setup
+keyclaude config                 # Show current config
+keyclaude config set KEYCLAUDE_DATA_REPO=/path/to/data   # Change data directory
+```
+
+Individual commands are also available directly:
+
+```bash
+keyclaude-rewrite default        # Rewrite text
+keyclaude-later                  # Save task to later queue
+keyclaude-growth-capture         # Extract growth opportunities
+```
+
+## Config
+
+All configuration lives in `~/.config/keyclaude/config`. This file is sourced by every script — no env vars, no LaunchAgents, no `.zshrc` changes needed.
+
+| Key | Default | Purpose |
+|-----|---------|---------|
+| `KEYCLAUDE_DATA_REPO` | `$HOME/notes/data` | Where weekly notes, growth logs, and later tasks are stored |
+
+```bash
+# View:   keyclaude config
+# Change: keyclaude config set KEYCLAUDE_DATA_REPO=/Users/you/wherever
+```
+
+The config file is a simple shell snippet — you can edit it directly: `vim ~/.config/keyclaude/config`
+
+---
+
 ## Architecture
 
 ### Two-repo model
 
 `keyclaude` is the **engine**: skills, agents, bin scripts, and shortcuts. No personal data lives here.
 
-Your data directory (`$GROWTH_REPO`) is the **data layer**: weekly notes, leadership log, and work-specific context. The engine reads from it and writes back to it.
+Your data directory (`$KEYCLAUDE_DATA_REPO`) is the **data layer**: weekly notes, leadership log, and work-specific context. The engine reads from it and writes back to it.
 
 ```
-keyclaude/                    $GROWTH_REPO/
+keyclaude/                    $KEYCLAUDE_DATA_REPO/
   bin/weekly-init      ──writes──▶   weekly/YYYY-WNN.md
   bin/weekly-review    ──reads ──▶   weekly/YYYY-WNN.md
                        ──writes──▶   weekly/YYYY-WNN.md (## Weekly Review appended)

@@ -1,0 +1,30 @@
+{
+  "name": "keyclaude",
+  "version": "1.0.0",
+  "description": "Engineering Personal Assistant — AI-powered keyboard shortcuts for rewriting, growth capture, and productivity",
+  "license": "MIT",
+  "author": "w.trocki",
+  "repository": "github:wtrocki/keyclaude",
+  "bin": {
+    "keyclaude-rewrite": "./bin/rewrite",
+    "keyclaude-weekly-init": "./bin/weekly-init",
+    "keyclaude-weekly-review": "./bin/weekly-review",
+    "keyclaude-monthly-review": "./bin/monthly-review",
+    "keyclaude-growth-capture": "./bin/growth-capture",
+    "keyclaude-leadership-feedback": "./bin/leadership-feedback",
+    "keyclaude-later": "./bin/later",
+    "keyclaude": "./bin/keyclaude"
+  },
+  "scripts": {
+    "postinstall": "echo 'Run: keyclaude install   (to set up macOS shortcuts and config)'"
+  },
+  "files": [
+    "bin/",
+    ".claude/skills/",
+    ".claude/profiles/",
+    "shortcuts/",
+    "slides/",
+    "settings/",
+    "install.sh"
+  ]
+}

@@ -1,7 +1,10 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-DATA_ROOT="${GROWTH_REPO:-$HOME/notes/data}"
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+source "$SCRIPT_DIR/lib.sh"
+
+DATA_ROOT="${KEYCLAUDE_DATA_REPO:-$HOME/notes/data}"
 TASKS_FILE="$DATA_ROOT/Later tasks.md"
 
 INPUT=$(cat)
@@ -13,15 +16,22 @@ if [[ "$CLIPBOARD" =~ https?://[a-zA-Z0-9.-]+\.slack\.com/archives/[^\ ]+ ]]; th
   SLACK_URL="$CLIPBOARD"
 fi
 
-LINE=$(printf '%s' "$INPUT" | head -1)
+CONTENT=$(printf '%s' "$INPUT")
+FIRST_LINE=$(printf '%s' "$INPUT" | head -1)
 if [[ -n "$SLACK_URL" ]]; then
-  ENTRY="- [ ] $LINE ([thread]($SLACK_URL))"
+  ENTRY="- [ ] $FIRST_LINE ([thread]($SLACK_URL))"
 else
-  ENTRY="- [ ] $LINE"
+  ENTRY="- [ ] $FIRST_LINE"
 fi
+REST=$(printf '%s' "$INPUT" | tail -n +2)
+if [[ -n "$REST" ]]; then
+  ENTRY="$ENTRY"$'\n'"$(printf '%s' "$REST" | sed 's/^/  /')"
+fi
+
+PREVIEW=$(printf '%s' "$FIRST_LINE" | head -c 80)
 
 mkdir -p "$DATA_ROOT"
 printf '%s\n' "$ENTRY" >> "$TASKS_FILE"
 
 afplay /System/Library/Sounds/Glass.aiff &
-osascript -e 'display notification "'"$LINE"'" with title "Later: Task saved"' &
+osascript -e 'display notification "'"$PREVIEW"'" with title "Later: Task saved"' &

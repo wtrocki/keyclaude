@@ -1,0 +1,45 @@
+#!/usr/bin/env bash
+# Usage: echo "text" | bin/capture                    — log selected text as work evidence
+#        bin/capture /path/to/file.md                 — log from a file
+set -euo pipefail
+
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+source "$SCRIPT_DIR/lib.sh"
+
+DATA_ROOT="${KEYCLAUDE_DATA_REPO:-$HOME/notes/data}"
+LOG_FILE="$DATA_ROOT/work-log.md"
+
+if [[ $# -gt 0 ]]; then
+  INPUT=$(cat "$1")
+else
+  INPUT=$(cat)
+fi
+[[ -z "$INPUT" ]] && { echo "Error: no input text" >&2; exit 1; }
+
+CLIPBOARD=$(pbpaste 2>/dev/null || true)
+SLACK_URL=""
+if [[ "$CLIPBOARD" =~ https?://[a-zA-Z0-9.-]+\.slack\.com/archives/[^\ ]+ ]]; then
+  SLACK_URL="$CLIPBOARD"
+fi
+
+TIMESTAMP=$(date +"%Y-%m-%d %H:%M")
+
+mkdir -p "$DATA_ROOT"
+{
+  printf '\n---\n\n### %s\n\n' "$TIMESTAMP"
+  printf '%s\n' "$INPUT"
+  if [[ -n "$SLACK_URL" ]]; then
+    printf '\n[source](%s)\n' "$SLACK_URL"
+  fi
+  printf '\n'
+  if RESULT=$(printf '%s' "$INPUT" | ai "/growth-capture" 2>/dev/null); then
+    printf '%s\n' "$RESULT"
+    printf '\n'
+  fi
+} >> "$LOG_FILE"
+
+FIRST_LINE=$(printf '%s' "$INPUT" | head -1)
+PREVIEW=$(printf '%s' "$FIRST_LINE" | head -c 80)
+
+afplay /System/Library/Sounds/Glass.aiff &
+osascript -e 'display notification "'"$PREVIEW"'" with title "Capture: Evidence saved"' &
