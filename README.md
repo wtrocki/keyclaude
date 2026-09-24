@@ -104,16 +104,6 @@ Skills are stateless — they transform input into structured output.
 | `monthly-review` | Aggregate a period's weekly notes against the monthly plan into a snapshot: Impact Stories by North Star + LP tag, What Closed/Shipped, Major/Minor/Elective draft plan, backlog delta. Reads `growth/leadership-principles.md` + `growth/signals.md` as evaluation context — seed examples in [`examples/growth/`](examples/growth/) |
 | `slides` | Generate a reveal.js slide deck from a topic: `/slides <topic>` — outputs editable Markdown + standalone HTML |
 
-## Agents
-
-Agent profiles are optional coaching personas. These live in your data repo, not in keyclaude. To load one:
-
-```bash
-opencode --agent ~/Projects/engineering-notes/.claude/profiles/leadership-agent.yaml
-```
-
-Available agents are up to you — create and maintain them in your data repo alongside your notes.
-
 ---
 
 ## CLI
