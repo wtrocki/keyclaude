@@ -7,7 +7,7 @@ source "$SCRIPT_DIR/lib.sh"
 
 DATA_ROOT="${KEYCLAUDE_DATA_REPO:-$HOME/notes/data}"
 WEEKLY_DIR="$DATA_ROOT/weekly"
-WEEK="${1:-$(date +"%Y-W%V")}"
+WEEK=$(_resolve_weekly "${1:-}" "$WEEKLY_DIR") || true
 FILE="$WEEKLY_DIR/${WEEK}.md"
 
 [[ ! -f "$FILE" ]] && { echo "Error: weekly note not found: $FILE" >&2; echo "Run 'bin/weekly-init ${WEEK}' to create it." >&2; exit 1; }

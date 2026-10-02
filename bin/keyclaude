@@ -18,7 +18,7 @@ cmd_help() {
   echo "Review targets:"
   echo "  backlog          Task backlog"
   echo "  work-log         Work evidence log"
-  echo "  weekly [N]       Weekly note (default: auto-detect current week)"
+  echo "  weekly [N]       Weekly note (default: latest existing week)"
   echo "  writing          Writing insights"
   echo ""
   echo "Skills (also available as direct commands):"
@@ -80,7 +80,7 @@ cmd_review() {
       file="$DATA_ROOT/writing-insights.md"
       ;;
     weekly)
-      local week="${2:-$(date +"%Y-W%V")}"
+      local week; week=$(_resolve_weekly "${2:-}" "$DATA_ROOT/weekly") || true
       file="$DATA_ROOT/weekly/${week}.md"
       ;;
     *)

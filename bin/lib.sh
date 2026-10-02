@@ -9,6 +9,20 @@ if [[ -f "$CONFIG_FILE" ]]; then
 fi
 export KEYCLAUDE_DATA_REPO="${KEYCLAUDE_DATA_REPO:-$HOME/notes/data}"
 
+_resolve_weekly() {
+  local week="${1:-$(date +"%Y-W%V")}"
+  local dir="${2:-$KEYCLAUDE_DATA_REPO/weekly}"
+  if [[ -f "$dir/${week}.md" ]]; then
+    echo "$week"; return 0
+  fi
+  if [[ -z "${1:-}" ]]; then
+    local latest; latest=$(ls -r "$dir"/????-W??.md 2>/dev/null | head -1)
+    [[ -n "$latest" ]] && { basename "$latest" .md; return 0; }
+    echo "$week"; return 1
+  fi
+  echo "$week"; return 1
+}
+
 _find_opencode() {
   command -v opencode 2>/dev/null && return
   for dir in "$HOME/.opencode/bin" "$HOME/.local/bin" "/opt/homebrew/bin" "/usr/local/bin"; do
