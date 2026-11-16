@@ -12,7 +12,7 @@ cmd_help() {
   echo "Commands:"
   echo "  install          Run full setup (macOS shortcuts, config, brew deps)"
   echo "  config           Show current config"
-  echo "  config set KEY=VAL  Set a config value"
+  echo "  config set KEY=VAL  Set a config value (e.g. KEYCLAUDE_AI_BACKEND=claude|opencode)"
   echo "  review <what>    Open a data file in Plannotator for review"
   echo ""
   echo "Review targets:"

@@ -71,7 +71,7 @@ cd keyclaude
 ./install.sh
 ```
 
-The bin scripts use **opencode** by default and fall back to **Claude Code** if opencode isn't found.
+The bin scripts support both **Claude Code 2.x** and **OpenCode 2.0**. By default, it prefers Claude Code and falls back to OpenCode. You can explicitly configure the backend via `KEYCLAUDE_AI_BACKEND=claude` or `opencode` in `~/.config/keyclaude/config` (or `keyclaude config set KEYCLAUDE_AI_BACKEND=claude`).
 
 Alternatively, install globally via npm to get all commands on PATH:
 

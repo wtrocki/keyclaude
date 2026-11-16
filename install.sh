@@ -33,15 +33,15 @@ install_if_missing() {
 echo "==> Checking required tools"
 require_brew
 install_if_missing pandoc        # slides: markdown → reveal.js HTML
-# Prefer opencode; fall back to Claude Code (most users will have claude)
-if check opencode; then
-  echo "  ok  opencode"
-elif check claude; then
-  echo "  ok  claude"
+# Support both Claude Code 2.x and OpenCode 2.0
+if check claude; then
+  echo "  ok  claude (Claude Code)"
+elif check opencode; then
+  echo "  ok  opencode (OpenCode 2.0)"
 else
-  echo "  No AI CLI found. Install opencode or claude manually."
+  echo "  No AI CLI found. Install claude or opencode manually."
+  echo "  - claude:   npm install -g @anthropic-ai/claude-code"
   echo "  - opencode: brew install opencode"
-  echo "  - claude:   brew install claude"
 fi
 
 # ── 2. KeyClaude config ──────────────────────────────────────────────────────
@@ -55,8 +55,12 @@ mkdir -p "$(dirname "$KEYCLAUDE_CONFIG")"
 [[ -f "$KEYCLAUDE_CONFIG" ]] && source "$KEYCLAUDE_CONFIG"
 
 KEYCLAUDE_DATA_REPO="${KEYCLAUDE_DATA_REPO:-$HOME/notes/data}"
-echo "KEYCLAUDE_DATA_REPO=$KEYCLAUDE_DATA_REPO" > "$KEYCLAUDE_CONFIG"
-echo "  ok  $KEYCLAUDE_CONFIG → KEYCLAUDE_DATA_REPO=$KEYCLAUDE_DATA_REPO"
+KEYCLAUDE_AI_BACKEND="${KEYCLAUDE_AI_BACKEND:-${KEYCLAUDE_AI:-auto}}"
+cat << EOF > "$KEYCLAUDE_CONFIG"
+KEYCLAUDE_DATA_REPO=$KEYCLAUDE_DATA_REPO
+KEYCLAUDE_AI_BACKEND=$KEYCLAUDE_AI_BACKEND
+EOF
+echo "  ok  $KEYCLAUDE_CONFIG → KEYCLAUDE_DATA_REPO=$KEYCLAUDE_DATA_REPO, KEYCLAUDE_AI_BACKEND=$KEYCLAUDE_AI_BACKEND"
 
 # ── 3. Data directories ──────────────────────────────────────────────────────
 
@@ -84,8 +88,8 @@ install_skills() {
   done
 }
 
-install_skills "$HOME/.opencode/skills"
 install_skills "$HOME/.claude/skills"
+install_skills "$HOME/.opencode/skills"
 
 # ── 5. macOS Shortcuts (Rewrite Quick Actions) ────────────────────────────────
 
