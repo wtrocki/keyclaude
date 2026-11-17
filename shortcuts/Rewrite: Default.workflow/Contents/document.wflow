@@ -59,9 +59,7 @@
                 <key>ActionParameters</key>
                 <dict>
                     <key>COMMAND_STRING</key>
-                    <string>export PATH="/usr/local/bin:/opt/homebrew/bin:$HOME/.local/bin:$HOME/.opencode/bin:$PATH"
-REPO_ROOT="/Users/w.trocki/Projects/keyclaude"
-"$REPO_ROOT/bin/rewrite" default</string>
+                    <string>"$HOME/.config/keyclaude/bin/rewrite" default</string>
                     <key>CheckedForUserDefaultShell</key>
                     <true/>
                     <key>inputMethod</key>

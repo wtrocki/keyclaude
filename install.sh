@@ -51,16 +51,21 @@ echo "==> Creating keyclaude config"
 KEYCLAUDE_CONFIG="$HOME/.config/keyclaude/config"
 mkdir -p "$(dirname "$KEYCLAUDE_CONFIG")"
 
+# Symlink bin directory into ~/.config/keyclaude/bin for direct shortcut access
+ln -sfn "$REPO_DIR/bin" "$HOME/.config/keyclaude/bin"
+
 # Source existing config if present, so install respects prior settings
 [[ -f "$KEYCLAUDE_CONFIG" ]] && source "$KEYCLAUDE_CONFIG"
 
 KEYCLAUDE_DATA_REPO="${KEYCLAUDE_DATA_REPO:-$HOME/notes/data}"
 KEYCLAUDE_AI_BACKEND="${KEYCLAUDE_AI_BACKEND:-${KEYCLAUDE_AI:-auto}}"
+KEYCLAUDE_REPO_DIR="${KEYCLAUDE_REPO_DIR:-$REPO_DIR}"
 cat << EOF > "$KEYCLAUDE_CONFIG"
 KEYCLAUDE_DATA_REPO=$KEYCLAUDE_DATA_REPO
 KEYCLAUDE_AI_BACKEND=$KEYCLAUDE_AI_BACKEND
+KEYCLAUDE_REPO_DIR=$KEYCLAUDE_REPO_DIR
 EOF
-echo "  ok  $KEYCLAUDE_CONFIG → KEYCLAUDE_DATA_REPO=$KEYCLAUDE_DATA_REPO, KEYCLAUDE_AI_BACKEND=$KEYCLAUDE_AI_BACKEND"
+echo "  ok  $KEYCLAUDE_CONFIG → KEYCLAUDE_DATA_REPO=$KEYCLAUDE_DATA_REPO, KEYCLAUDE_AI_BACKEND=$KEYCLAUDE_AI_BACKEND, KEYCLAUDE_REPO_DIR=$KEYCLAUDE_REPO_DIR"
 
 # ── 3. Data directories ──────────────────────────────────────────────────────
 

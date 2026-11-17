@@ -59,10 +59,7 @@
                 <key>ActionParameters</key>
                 <dict>
                     <key>COMMAND_STRING</key>
-                    <string>export PATH="/usr/local/bin:/opt/homebrew/bin:$HOME/.local/bin:$HOME/.opencode/bin:$PATH"
-# Resolve symlink to find the real repo location
-REPO_ROOT="/Users/w.trocki/Projects/keyclaude"
-"$REPO_ROOT/bin/capture"</string>
+                    <string>"$HOME/.config/keyclaude/bin/capture"</string>
                      <key>CheckedForUserDefaultShell</key>
                     <true/>
                     <key>inputMethod</key>

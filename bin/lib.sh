@@ -5,6 +5,8 @@
 # falling back to OpenCode 2.0. Can be configured via KEYCLAUDE_AI_BACKEND in
 # ~/.config/keyclaude/config (claude|opencode).
 
+export PATH="/opt/homebrew/bin:/usr/local/bin:$HOME/.local/bin:$HOME/.opencode/bin:${PATH:-}"
+
 CONFIG_FILE="$HOME/.config/keyclaude/config"
 if [[ -f "$CONFIG_FILE" ]]; then
   source "$CONFIG_FILE"
