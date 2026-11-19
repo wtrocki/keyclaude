@@ -38,3 +38,8 @@ Public-facing rewrite for blog posts, conference submissions, LinkedIn, or commu
 - Never add promises, commitments, or information not in the original.
 - Never remove evidence links or citations already present.
 - Return only the final rewritten text — no mode label, no explanation, no meta-commentary.
+
+** Notes** 
+- User might provide additional instruction in the first part of the prompt.
+- Prefer bullet point formatting if provided
+
